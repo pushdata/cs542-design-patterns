@@ -27,8 +27,6 @@ public class Driver
 				list.insertSorted(value);
 			}
 			results=new Results(processor);
-		
-			//list.removeValue(3);
 			
 			System.out.println(list.toString());
 			arrayListTest.testMe(list, results);

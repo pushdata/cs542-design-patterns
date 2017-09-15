@@ -8,7 +8,7 @@ public class MyArrayList {
 	private Integer sum;
 
 	public MyArrayList(){
-		capacity=4;
+		capacity=6;
 		data= new int[capacity];
 		count=0;
 		sum=0;
@@ -129,7 +129,10 @@ public class MyArrayList {
 
 	public int size(){
 		return count;
-
+	}
+	
+	public int trueSize(){
+		return this.capacity;
 	}
 
 	public int  sum(){
