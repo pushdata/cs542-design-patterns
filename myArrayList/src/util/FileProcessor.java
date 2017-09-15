@@ -1,20 +1,23 @@
 package src.util;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+
 
 public class FileProcessor {
 
 	private BufferedReader bufferedReader;
-
-	public FileProcessor(String inputFileName_in){
+	private BufferedWriter bufferedWriter;
+	public FileProcessor(String inputFileName_in, String outputFile){
 		try {
 			bufferedReader= new BufferedReader(new FileReader(inputFileName_in));
-
-		}catch (FileNotFoundException e) {
-			System.err.println("FileNotFoundException: "+e.getMessage());
+			bufferedWriter=new BufferedWriter(new FileWriter(new File(outputFile)));
+		}catch (Exception e) {
+			System.err.println("Exception: "+e.getMessage());
 			System.exit(1);
 		}
 
@@ -27,7 +30,16 @@ public class FileProcessor {
 		return line;
 	}
 
-
+	public void writeOutPuttoFile(String line){
+		try {
+			bufferedWriter.write(line);
+			bufferedWriter.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			
+		}
+	}
 
 	public BufferedReader getBufferedReader() {
 		return bufferedReader;
@@ -35,5 +47,13 @@ public class FileProcessor {
 
 	public void setBufferedReader(BufferedReader bufferedReader) {
 		this.bufferedReader = bufferedReader;
+	}
+
+	public BufferedWriter getBufferedWriter() {
+		return bufferedWriter;
+	}
+
+	public void setBufferedWriter(BufferedWriter bufferedWriter) {
+		this.bufferedWriter = bufferedWriter;
 	}
 }

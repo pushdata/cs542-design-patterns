@@ -1,40 +1,45 @@
 package src.driver;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 
 import src.myArrayList.MyArrayList;
+import src.test.MyArrayListTest;
 import src.util.FileProcessor;
 import src.util.Results;
 
 public class Driver 
 {
 
-	public static void main(String[] args) 
-	{
+	
+	public static void main(String[] args) {
 		try {
 			Driver driver=new Driver();
 			driver.validateGivenArguments(args);;
-			FileProcessor processor= new FileProcessor(args[0]);
+			Results results;
+			FileProcessor processor= new FileProcessor(args[0],args[1]);
 			MyArrayList list= new MyArrayList();
+			MyArrayListTest arrayListTest= new MyArrayListTest();
 			String line=null;
 			while((line= processor.readLine())!=null){
 				int value=Integer.parseInt(line);
 				list.insertSorted(value);
 			}
-			System.out.println("toString of myArrayList  " +list.toString());
-			System.out.println("Sum= "+list.sum());
-			System.out.println("Index of 123 is = "+list.indexOf(123));
-			System.out.println("size  of myArrayList  " +list.size());
-			System.out.println("remove  123 = "+list.removeValue(123)+" newData: "+list.toString() );
-			System.out.println("size  of myArrayList  " +list.size());
-			System.out.println("add  334  ");
-			list.insertSorted(334);
-			System.out.println("size  of myArrayList  " +list.size());
-			System.out.println("remove  334 = "+list.removeValue(334)+" newData: "+list.toString() );
-			System.out.println("size  of myArrayList  " +list.size());
-			System.out.println("remove  334 = "+list.removeValue(336)+" newData: "+list.toString() );
-			Results results= new Results(processor);
+			results=new Results(processor);
+		
+			//list.removeValue(3);
+			
+			System.out.println(list.toString());
+			arrayListTest.testMe(list, results);
+			for(String testResult: results.getTestCaseResults()){
+				results.writeOutpuToFile(testResult);
+			}
+			BufferedWriter writer=processor.getBufferedWriter();
+			results.writeOutpuToFile("\nSum of the elements in inputFile is: "+list.sum());
+
+			writer.close();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

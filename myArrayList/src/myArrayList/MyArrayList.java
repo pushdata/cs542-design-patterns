@@ -5,12 +5,13 @@ public class MyArrayList {
 	private int capacity;
 	private int[] data;
 	private int count;
-	private Integer sum=0;
+	private Integer sum;
 
 	public MyArrayList(){
 		capacity=4;
 		data= new int[capacity];
 		count=0;
+		sum=0;
 	}
 
 	public void insertSorted(int newValue){
@@ -19,7 +20,11 @@ public class MyArrayList {
 			int newCapacity= oldCapacity+oldCapacity/2;
 			this.capacity=newCapacity;
 			int[] newdata= new int[capacity];
-			System.arraycopy(data, 0, newdata, 0,oldCapacity);
+			//System.arraycopy(data, 0, newdata, 0,oldCapacity);
+			for(int i=0;i<oldCapacity;i++){
+				newdata[i]=data[i];
+			}
+			
 			data= newdata;
 		}
 		insertNewValue(newValue);
@@ -70,16 +75,31 @@ public class MyArrayList {
 		if(index!=-1){
 			startIndex=index;
 			endIndex=startIndex;
-			while(data[endIndex]==value){
+			while(endIndex<count && data[endIndex]==value){
 				endIndex++;
 			}
+			
 			int[] array1= new int[startIndex];
-			System.arraycopy(data, 0, array1, 0,startIndex);
-			int[] array2= new int[count-endIndex];
-			System.arraycopy(data, endIndex, array2,0,array2.length);
+			//Copying values before target element
+			for(int i=0;i<startIndex;i++){
+				array1[i]=data[i];
+			}
+			//System.arraycopy(data, 0, array1, 0,startIndex);
+			int remainingLength = count-endIndex;
+			int[] array2= new int[remainingLength];
+			for(int i=0;i<remainingLength;i++){
+				array2[i]=data[endIndex+i];
+			}
+			for(int i=0;i<array1.length;i++){
+				data[i]=array1[i];
+			}
+			for(int i=0;i<array2.length;i++){
+				data[startIndex+i]=array2[i];
+			}
+		/*	System.arraycopy(data, endIndex, array2,0,array2.length);
 			System.arraycopy(array1, 0, data,0,array1.length);
 			System.arraycopy(array2, 0, data,startIndex,array2.length);
-			int noOfElementsRemoved=endIndex-startIndex;
+		*/	int noOfElementsRemoved=endIndex-startIndex;
 			while(noOfElementsRemoved>0){
 				data[count-1]=0;
 				count--;
@@ -97,7 +117,7 @@ public class MyArrayList {
 		int index=-1;
 		if(data.length>0){
 			int currIndex=0;
-			while(currIndex<count && data[currIndex]!=value){
+			while(currIndex<count-1 && data[currIndex]!=value){
 				currIndex++;
 			}
 			if(data[currIndex]==value){
@@ -113,7 +133,11 @@ public class MyArrayList {
 	}
 
 	public int  sum(){
-		return sum;
+		int temp=0;
+		for(int i=0;i<count;i++){
+			temp+=data[i];
+		}
+		return temp;
 
 	}
 

@@ -1,8 +1,12 @@
 package src.util;
 
-public class Results implements StdoutDisplayInterface, FileDisplayInterface {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Results implements DisplayInterface {
 
 	private FileProcessor fileProcessor;
+	private List<String> testCaseResults = new ArrayList<String>();
 	
 	
 	public Results(FileProcessor fileProcessor_in){
@@ -18,15 +22,31 @@ public class Results implements StdoutDisplayInterface, FileDisplayInterface {
 	}
 
 	@Override
-	public void writeOutpuToFile() {
-		
+	public void writeOutpuToFile(String outputLine) {
+		fileProcessor.writeOutPuttoFile(outputLine+"\n");
 	}
 
 	@Override
 	public void writeOutPutToStdout() {
 		
 	}
+	
+	
+	public void storeNewResult(String testCaseName, String result){
+		
+		this.getTestCaseResults().add(testCaseName+result);
+		
+	}
 
+	public List<String> getTestCaseResults() {
+		return testCaseResults;
+	}
+
+	public void setTestCaseResults(List<String> testCaseResults) {
+		this.testCaseResults = testCaseResults;
+	}
+	
+	
 
 
 }
