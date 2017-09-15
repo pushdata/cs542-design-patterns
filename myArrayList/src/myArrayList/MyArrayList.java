@@ -1,4 +1,4 @@
-package src.myArrayList;
+package myArrayList;
 
 public class MyArrayList {
 
