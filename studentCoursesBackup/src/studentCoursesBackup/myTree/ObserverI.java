@@ -1,5 +1,7 @@
 package studentCoursesBackup.myTree;
 
-public class ObserverI {
+public interface ObserverI {
+
+
 
 }

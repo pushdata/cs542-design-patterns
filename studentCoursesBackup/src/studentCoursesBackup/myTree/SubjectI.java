@@ -1,5 +1,6 @@
 package studentCoursesBackup.myTree;
 
-public class SubjectI {
+public interface SubjectI {
 
+    public void notifyNodes(Node node);
 }

@@ -1,11 +1,7 @@
 package studentCoursesBackup.util;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 
 
 public class FileProcessor {
@@ -14,27 +10,34 @@ public class FileProcessor {
 	private BufferedReader deleteLineCount;
 	private BufferedReader inputReader;
 	private BufferedReader deleteReader;
-	private BufferedWriter outputOneWriter;
-	private BufferedWriter outputTwoWriter;
-	private BufferedWriter outputThreeWriter;
+	private BufferedWriter outputWriter;
+
+	FileProcessor() {
+
+	}
 	public FileProcessor(String inputFile){
-			//,String deleteFile,String outputOne,String outputTwo, String outputThree){
 		try {
 			inputLineCount= new BufferedReader(new FileReader(inputFile));
 			//outputLineCount= new BufferedReader(new FileReader(deleteFile));
 			inputReader= new BufferedReader(new FileReader(inputFile));
 			//deleteReader= new BufferedReader(new FileReader(deleteFile));
-			//outputOneWriter=new BufferedWriter(new FileWriter(new File(outputOne)));
-			//outputTwoWriter=new BufferedWriter(new FileWriter(new File(outputTwo)));
-			//outputThreeWriter=new BufferedWriter(new FileWriter(new File(outputThree)));
-
 		}catch (Exception e) {
 			System.err.println("Exception: "+e.getMessage());
 			System.exit(1);
 		}
 
 	}
-	
+
+	public FileProcessor(String file1, String file2, String file3, ArrayList<String> result) throws IOException {
+
+		outputWriter = new BufferedWriter(new FileWriter(new File(file1)));
+		for (String line : result) {
+			outputWriter.write(line);
+			outputWriter.flush();
+		}
+		outputWriter.close();
+
+	}
 	public int inputLineCount() throws IOException{
 		int lines=0;
 		while (inputLineCount.readLine() != null) {
@@ -61,17 +64,6 @@ public class FileProcessor {
 		return inputLine;
 	}
 
-	//Writes output from testcases to file
-	public void writeOutput(String line){
-		try {
-			outputOneWriter.write(line);
-			outputOneWriter.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally{
-			
-		}
-	}
 
 	public BufferedReader getBufferedReader() {
 		return inputReader;
@@ -82,10 +74,10 @@ public class FileProcessor {
 	}
 
 	public BufferedWriter getBufferedWriter() {
-		return outputOneWriter;
+		return outputWriter;
 	}
 
 	public void setBufferedWriter(BufferedWriter bufferedWriter) {
-		this.outputOneWriter = bufferedWriter;
+		this.outputWriter = bufferedWriter;
 	}
 }
