@@ -28,7 +28,7 @@ public class FileProcessor {
 
 	}
 
-	public FileProcessor(String file1, String file2, String file3, ArrayList<String> result) throws IOException {
+	public FileProcessor(String file1, ArrayList<String> result) throws IOException {
 
 		outputWriter = new BufferedWriter(new FileWriter(new File(file1)));
 		for (String line : result) {

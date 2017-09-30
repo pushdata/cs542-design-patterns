@@ -2,7 +2,7 @@ package studentCoursesBackup.myTree;
 
 import java.util.ArrayList;
 
-public class Node implements ObserverI, SubjectI {
+public class Node implements Cloneable, ObserverI, SubjectI {
 	//Data Members
 	private int bNumber;
 	private ArrayList<String> courseName=new ArrayList<>();
@@ -17,22 +17,46 @@ public class Node implements ObserverI, SubjectI {
 		nodeBackupRef.add(node);
 	}
 
-	@Override
-	public void notifyNodes(Node node) {
-		ArrayList<Node> temp = null;
-		temp = node.getNodeBackupRef();
-		for (int i = 0; i < 2; i++) {
-			temp.get(i).courseName = node.getCourseName();
-			temp.get(i).setbNumber(node.getbNumber());
-		}
-
+	public void deleteNodeBackupRef(Node node) {
+		node.nodeBackupRef.remove(0);
+		node.nodeBackupRef.remove(1);
 	}
-	
+
+
+	public Node clone() {
+		Node cloned = null;
+		try {
+			cloned = (Node) super.clone();
+			cloned.nodeBackupRef = (ArrayList<Node>) nodeBackupRef.clone();
+			cloned.courseName = (ArrayList<String>) courseName.clone();
+		} catch (CloneNotSupportedException e) {
+			System.err.println("Cloning not supported");
+		}
+		return cloned;
+	}
+
+	@Override
+	public void registerObserver(Node node_orig, Node backup_node_1, Node backup_node_2) {
+		node_orig.setNodeBackupRef(backup_node_1);
+		node_orig.setNodeBackupRef(backup_node_2);
+	}
+
+	@Override
+	public void removeObserver(Node node_orig) {
+		node_orig.deleteNodeBackupRef(node_orig);
+	}
+
+	@Override
+	public void notifyAll(Node node_orig, String cName) {
+		update(node_orig, cName);
+	}
+
+
 	public Node(int bNo,String cName){
 		this.bNumber=bNo;
 		courseName.add(cName);
 	}
-	
+
 	public int getbNumber() {
 		return bNumber;
 	}
@@ -41,19 +65,14 @@ public class Node implements ObserverI, SubjectI {
 		return this.courseName;
 	}
 
-	public void setbNumber(int bNumber) {
-		this.bNumber = bNumber;
-	}
-
 	public void setCourseName(String cName) {
 		courseName.add(cName);
 	}
 
-
-	public void deleteCourse(String cName){
-		courseName.remove(cName);
+	public void update(Node node, String cName) {
+		for (int i = 0; i < 2; i++) {
+			node.getNodeBackupRef().get(i).getCourseName().remove(cName);
+		}
 	}
-	
-	
-			
+
 }

@@ -36,12 +36,21 @@ public class Driver
 		}
 
         //Delete operation
-
         Results r = new Results();
-        //Printing to output files
-        tb.printNodes(r, tb.getRoot());
-        r.writeToFile(args[2], args[3], args[4]);
+        Results rb1 = new Results();
+        Results rb2 = new Results();
 
-	}
+        //Printing to output files
+        tb.printNodes(r, rb1, rb2, tb.getRoot());
+        r.writeToFile(args[2]);
+        rb1.writeToFile(args[3]);
+        rb2.writeToFile(args[4]);
+//        r = new Results();
+//		tb.printNodes(r, tb.getRoot().getNodeBackupRef().get(0));
+//		r.writeToFile(args[3]);
+//		r = new Results();
+//		tb.printNodes(r, tb.getRoot().getNodeBackupRef().get(1));
+//		r.writeToFile(args[4]);
+    }
 }
 			

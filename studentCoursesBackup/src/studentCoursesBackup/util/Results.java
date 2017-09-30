@@ -16,12 +16,13 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
     }
 
     public void setResult(String res) {
-        result.add(res);
+        String temp = res.toString().replace("[", "").replace("]", "");
+        result.add(temp + "\n");
     }
 
-    public void writeToFile(String file1, String file2, String file3) {
+    public void writeToFile(String file1) {
         try {
-            FileProcessor fp = new FileProcessor(file1, file2, file3, this.getResult());
+            FileProcessor fp = new FileProcessor(file1, this.getResult());
         } catch (IOException e) {
             e.printStackTrace();
         }
