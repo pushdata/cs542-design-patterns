@@ -23,16 +23,10 @@ public class Node implements Cloneable, ObserverI, SubjectI {
 	}
 
 
-	public Node clone() {
-		Node cloned = null;
-		try {
-			cloned = (Node) super.clone();
-			cloned.nodeBackupRef = (ArrayList<Node>) nodeBackupRef.clone();
-			cloned.courseName = (ArrayList<String>) courseName.clone();
-		} catch (CloneNotSupportedException e) {
-			System.err.println("Cloning not supported");
-		}
-		return cloned;
+	//Newly added
+	public Node(int bNo, ArrayList<String> cName) {
+		this.bNumber = bNo;
+		this.courseName = cName;
 	}
 
 	@Override
@@ -51,6 +45,23 @@ public class Node implements Cloneable, ObserverI, SubjectI {
 		update(node_orig, cName);
 	}
 
+	public Node clone() {
+		Node cloned = null;
+		try {
+			cloned = (Node) super.clone();
+			cloned.nodeBackupRef = (ArrayList<Node>) nodeBackupRef.clone();
+			cloned.courseName = (ArrayList<String>) courseName.clone();
+//			if(this instanceof Cloneable) {
+//				cloned = new Node(this.getbNumber(), this.getCourseName());
+//			}
+//			else{
+//				throw new CloneNotSupportedException();
+//			}
+		} catch (CloneNotSupportedException e) {
+			System.err.println("Cloning not supported");
+		}
+		return cloned;
+	}
 
 	public Node(int bNo,String cName){
 		this.bNumber=bNo;

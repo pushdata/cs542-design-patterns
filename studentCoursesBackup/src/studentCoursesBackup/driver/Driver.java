@@ -35,7 +35,17 @@ public class Driver
 			tb.insert(Integer.parseInt(inputArray[0]),inputArray[1]);
 		}
 
-        //Delete operation
+		//Processing the delete.txt
+
+		fp = new FileProcessor(args[1]);
+		inputLineCount = fp.inputLineCount();
+		for (int i = 0; i < inputLineCount; i++) {
+			String temp = fp.readLine();
+			inputArray = temp.split(":");
+			tb.delete(Integer.parseInt(inputArray[0]), inputArray[1]);
+		}
+
+
         Results r = new Results();
         Results rb1 = new Results();
         Results rb2 = new Results();
@@ -45,12 +55,6 @@ public class Driver
         r.writeToFile(args[2]);
         rb1.writeToFile(args[3]);
         rb2.writeToFile(args[4]);
-//        r = new Results();
-//		tb.printNodes(r, tb.getRoot().getNodeBackupRef().get(0));
-//		r.writeToFile(args[3]);
-//		r = new Results();
-//		tb.printNodes(r, tb.getRoot().getNodeBackupRef().get(1));
-//		r.writeToFile(args[4]);
     }
 }
 			

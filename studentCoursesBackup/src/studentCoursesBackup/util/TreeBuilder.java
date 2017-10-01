@@ -45,7 +45,7 @@ public class TreeBuilder {
 			}
 			//Insert node at proper position
 			else {
-				if (bNo == root.getbNumber()) {
+				if (bNo == root.getbNumber() && !root.getCourseName().contains(cName)) {
 					root.setCourseName(cName);
 					updateBackupNodesOnInsert(root, cName);
 				} else if (bNo > root.getbNumber()) {
@@ -68,9 +68,13 @@ public class TreeBuilder {
 	}
 	
 	private Node deleteRec(Node root,int bNo,String cName){
-		if (root.getbNumber()==bNo && root.getCourseName().equals(cName)) {
-			root.getCourseName().remove(cName);
-			root.update(root, cName);
+		if (root.getbNumber() == bNo)
+			for (String temp : root.getCourseName()) {
+				if (temp.equals(cName)) {
+					root.getCourseName().remove(cName);
+					root.update(root, cName);
+					break;
+				}
 		}
         else{
         if (bNo < root.getbNumber()){
