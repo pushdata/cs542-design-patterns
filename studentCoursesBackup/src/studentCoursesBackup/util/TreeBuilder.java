@@ -77,11 +77,10 @@ public class TreeBuilder {
 				}
 		}
         else{
-        if (bNo < root.getbNumber()){
-        	root.left = deleteRec(root.left,bNo,cName);
-        }
-        else {
-        	root.right = deleteRec(root.right,bNo,cName);
+            if (bNo < root.getbNumber() && root.left != null) {
+                root.left = deleteRec(root.left,bNo,cName);
+        } else if (bNo < root.getbNumber() && root.right != null) {
+                root.right = deleteRec(root.right,bNo,cName);
         }
         }
         return root;
