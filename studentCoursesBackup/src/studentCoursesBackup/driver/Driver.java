@@ -48,7 +48,8 @@ public class Driver
         int inputLineCount;
         try {
             if (args.length != 5) {
-                throw new IllegalArgumentException();
+                System.err.println("No of args should be equal to 5");
+                System.exit(0);
             }
             fp = new FileProcessor(args[0]);
         } catch (IllegalArgumentException e) {
@@ -62,17 +63,23 @@ public class Driver
         inputLineCount = fp.inputLineCount();
 
         for (int i = 0; i < inputLineCount; i++) {
-            String temp = fp.readLine();
-            inputArray = temp.split(":");
-            tb.insert(Integer.parseInt(inputArray[0]), inputArray[1]);
+            String line = fp.readLine();
+            if (line.isEmpty() || line.trim().equals("") || line.trim().equals("\n")) {
+            } else {
+                inputArray = line.split(":");
+                tb.insert(Integer.parseInt(inputArray[0]), inputArray[1]);
+            }
         }
 
         fp = new FileProcessor(args[1]);
         inputLineCount = fp.inputLineCount();
         for (int i = 0; i < inputLineCount; i++) {
-            String temp = fp.readLine();
-            inputArray = temp.split(":");
-            tb.delete(Integer.parseInt(inputArray[0]), inputArray[1]);
+            String line = fp.readLine();
+            if (line.isEmpty() || line.trim().equals("") || line.trim().equals("\n")) {
+            } else {
+                inputArray = line.split(":");
+                tb.delete(Integer.parseInt(inputArray[0]), inputArray[1]);
+            }
         }
 
 

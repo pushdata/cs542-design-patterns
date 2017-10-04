@@ -152,7 +152,7 @@ public class TreeBuilder {
 	 * @return Node.
 	 */
 	private Node deleteRec(Node root, int bNo, String cName){
-		if (root.getbNumber() == bNo)
+		if (root != null && root.getbNumber() == bNo)
 			for (String temp : root.getCourseName()) {
 				if (temp.equals(cName)) {
 					root.getCourseName().remove(cName);
@@ -161,9 +161,9 @@ public class TreeBuilder {
 				}
 			}
 		else {
-			if (bNo < root.getbNumber() && root.left != null) {
+			if (root != null && bNo < root.getbNumber() && root.left != null) {
 				root.left = deleteRec(root.left, bNo, cName);
-			} else if (bNo < root.getbNumber() && root.right != null) {
+			} else if (root != null && bNo < root.getbNumber() && root.right != null) {
 				root.right = deleteRec(root.right, bNo, cName);
 			}
 		}
