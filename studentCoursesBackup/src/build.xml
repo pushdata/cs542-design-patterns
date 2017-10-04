@@ -47,6 +47,18 @@
                deprecation="off"/>
     </target>
 
+
+    <property name="arg0"
+              value="C:\Users\The Beast\IdeaProjects\saiprudhvi_chode_assign_2\studentCoursesBackup\src\input.txt"/>
+    <property name="arg1"
+              value="C:\Users\The Beast\IdeaProjects\saiprudhvi_chode_assign_2\studentCoursesBackup\src\delete.txt"/>
+    <property name="arg2"
+              value="C:\Users\The Beast\IdeaProjects\saiprudhvi_chode_assign_2\studentCoursesBackup\src\output1.txt"/>
+    <property name="arg3"
+              value="C:\Users\The Beast\IdeaProjects\saiprudhvi_chode_assign_2\studentCoursesBackup\src\output2.txt"/>
+    <property name="arg4"
+              value="C:\Users\The Beast\IdeaProjects\saiprudhvi_chode_assign_2\studentCoursesBackup\src\output3.txt"/>
+
     <target name="run" depends="jar">
         <java jar="${BUILD}/jar/studentCoursesBackup.jar" fork="true">
             <arg value="${arg0}"/>
