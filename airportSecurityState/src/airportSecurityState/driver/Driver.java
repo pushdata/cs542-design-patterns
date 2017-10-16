@@ -46,5 +46,7 @@ public class Driver {
 
 
         SecurityFactors sf = new SecurityFactors();
+        sf.AverageTrafficPerDay(data);
+        sf.AverageProhibitedItemsPerDay(data);
     }
 }
