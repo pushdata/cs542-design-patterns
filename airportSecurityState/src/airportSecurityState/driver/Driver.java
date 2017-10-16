@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import airportSecurityState.util.Data;
+import airportSecurityState.util.SecurityFactors;
 
 public class Driver {
     private static ArrayList<Data> data = new ArrayList<>();
@@ -42,5 +43,8 @@ public class Driver {
                 System.exit(0);
             }
         }
+
+
+        SecurityFactors sf = new SecurityFactors();
     }
 }
