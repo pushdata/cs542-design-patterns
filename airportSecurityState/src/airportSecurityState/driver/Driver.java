@@ -5,12 +5,18 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
+import airportSecurityState.airportStates.RiskState;
 import airportSecurityState.util.Data;
 import airportSecurityState.util.SecurityFactors;
 
 public class Driver {
     private static ArrayList<Data> data = new ArrayList<>();
+    public static Queue<String> operations_list = new LinkedList<>();
+    private static int count = 0;
+    private static RiskState riskState = new RiskState();
     public static void main(String args[]) throws FileNotFoundException {
         System.out.println("Working from Main!");
         if(args.length!=1){
@@ -24,8 +30,9 @@ public class Driver {
             String line = br.readLine();
             String[] temp;
             while (line != null) {
+                count++;
                 temp=line.split(";");
-                    data.add(new Data(Integer.parseInt(temp[0].substring(4)),temp[1].substring(4),temp[2],temp[3]));
+                data.add(new Data(Integer.parseInt(temp[0].substring(4)), temp[1].substring(4), temp[2], temp[3], count));
                 line = br.readLine();
             }
         }
@@ -46,7 +53,7 @@ public class Driver {
 
 
         SecurityFactors sf = new SecurityFactors();
-        sf.AverageTrafficPerDay(data);
-        sf.AverageProhibitedItemsPerDay(data);
+        sf.calculateAverageValues(data);
+        riskState.invokeSecurity(sf.getAverageTrafficPerDay(), sf.getAverageProhibitedPerDay());
     }
 }

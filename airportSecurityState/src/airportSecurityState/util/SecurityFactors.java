@@ -7,22 +7,41 @@ import java.util.HashMap;
 
 public class SecurityFactors {
     AirportStateI state;
-    HashMap<Integer,Integer> averageDay = new HashMap<>();
-    HashMap<Integer,Integer> averageProhibitedPerDay = new HashMap<>();
+
+    private HashMap<Integer, Float> averageTrafficPerDay = new HashMap<>();
+    private HashMap<Integer, Float> averageProhibitedPerDay = new HashMap<>();
+
+    public HashMap<Integer, Float> getAverageTrafficPerDay() {
+        return averageTrafficPerDay;
+    }
+
+    public void setAverageTrafficPerDay(HashMap<Integer, Float> averageTrafficPerDay) {
+        this.averageTrafficPerDay = averageTrafficPerDay;
+    }
+
+    public HashMap<Integer, Float> getAverageProhibitedPerDay() {
+        return averageProhibitedPerDay;
+    }
+
+    public void setAverageProhibitedPerDay(HashMap<Integer, Float> averageProhibitedPerDay) {
+        this.averageProhibitedPerDay = averageProhibitedPerDay;
+    }
+
     public SecurityFactors(){
     }
 
-    public void AverageTrafficPerDay(ArrayList<Data> data){
+    public void calculateAverageValues(ArrayList<Data> data) {
+        int line = 0;
+        float count = 0;
         for(Data d:data){
-            averageDay.put(d.getDay(),averageDay.getOrDefault(d.getDay(),0)+1);
+            averageTrafficPerDay.put(line, (float) (d.getTravellerCount() / d.getDay()));
+            if (d.isProhibited()) {
+                count++;
+            }
+            averageProhibitedPerDay.put(line, (count / d.getDay()));
+            line++;
         }
+
     }
 
-    public void AverageProhibitedItemsPerDay(ArrayList<Data> data){
-        for(Data d:data){
-            if(d.isProhibited()){
-                averageProhibitedPerDay.put(d.getDay(),averageProhibitedPerDay.getOrDefault(d.getDay(),0)+1);
-            }
-        }
-    }
 }
