@@ -34,11 +34,11 @@ public class SecurityFactors {
         int line = 0;
         float count = 0;
         for(Data d:data){
-            averageTrafficPerDay.put(line, (float) (d.getTravellerCount() / d.getDay()));
+            averageTrafficPerDay.put(line, (float) (d.getTravellerCount() / d.getDayOrder()));
             if (d.isProhibited()) {
                 count++;
             }
-            averageProhibitedPerDay.put(line, (count / d.getDay()));
+            averageProhibitedPerDay.put(line, (count / d.getDayOrder()));
             line++;
         }
 

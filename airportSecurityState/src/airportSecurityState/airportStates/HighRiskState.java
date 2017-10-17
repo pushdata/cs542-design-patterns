@@ -11,29 +11,38 @@ public class HighRiskState implements AirportStateI {
     }
     @Override
     public void tightenOrLoosenSecurity(float aTraffic, float aItem) {
-        if (aTraffic >= 8 || aItem >= 2) {
-            int riskState = checkProhibited(aItem);
+        if (aTraffic >= 8.0 || aItem >= 2.0) {
+            int riskState = checkProhibited(aTraffic, aItem);
             switch (riskState) {
                 case 0:
-                    System.out.println("Security Loosened");
+                    System.out.println("Security Loosened(LOW)");
                     state.setState(state.getLowRiskState());
+                    state.getState().tightenOrLoosenSecurity(aTraffic, aItem);
                     break;
                 case 1:
-                    System.out.println("Security Loosened");
+                    System.out.println("Security Loosened(MOD)");
                     state.setState(state.getModerateRiskState());
+                    state.getState().tightenOrLoosenSecurity(aTraffic, aItem);
                     break;
                 case 2:
-                    System.out.println("Security Tightened");
                     Driver.operations_list.add(OPERATION_SEQ);
                     break;
             }
+        } else if ((aTraffic >= 4.0 && aTraffic < 8.0) || (aItem >= 1.0 && aItem < 2.0)) {
+            System.out.println("Security Loosened(MOD)");
+            state.setState(state.getModerateRiskState());
+            state.getState().tightenOrLoosenSecurity(aTraffic, aItem);
+        } else {
+            System.out.println("Security Loosened(LOW)");
+            state.setState(state.getLowRiskState());
+            state.getState().tightenOrLoosenSecurity(aTraffic, aItem);
         }
     }
 
-    public int checkProhibited(float aItem) {
-        if (aItem >= 0 && aItem < 1) {
+    public int checkProhibited(float aTraffic, float aItem) {
+        if ((aTraffic >= 0.0 && aTraffic < 4.0) && (aItem >= 0.0 && aItem < 1.0)) {
             return 0;
-        } else if (aItem >= 1 && aItem < 2) {
+        } else if ((aTraffic >= 4.0 && aTraffic < 8.0) && aItem >= 1.0 && aItem < 2.0) {
             return 1;
         } else {
             return 2;

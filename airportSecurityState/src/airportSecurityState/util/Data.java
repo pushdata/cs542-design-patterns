@@ -6,12 +6,13 @@ public class Data {
     private int day;
     private String time;
 
-    private int travellerCount = 0;
+    private int dayOrder;
+    private float travellerCount = 0;
     private String airline;
     private String item;
     private boolean isProhibited;
 
-    public Data(int iDay, String iTime, String iAirline, String iItems, int iCount) {
+    public Data(int iDay, String iTime, String iAirline, String iItems, int iCount, int idayOrder) {
         day=iDay;
         time=iTime;
         airline=iAirline.substring(8);
@@ -20,9 +21,14 @@ public class Data {
             isProhibited=true;
         }
         travellerCount = iCount;
+        dayOrder = idayOrder;
     }
 
-    public int getTravellerCount() {
+    public int getDayOrder() {
+        return dayOrder;
+    }
+
+    public float getTravellerCount() {
         return travellerCount;
     }
 
