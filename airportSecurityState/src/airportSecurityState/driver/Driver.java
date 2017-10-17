@@ -1,11 +1,14 @@
 package airportSecurityState.driver;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+import java.util.HashSet;
 import java.io.IOException;
-import java.util.*;
-
 import airportSecurityState.airportStates.RiskState;
 import airportSecurityState.util.Data;
 import airportSecurityState.util.MyLogger;
@@ -14,19 +17,45 @@ import airportSecurityState.util.SecurityFactors;
 public class Driver {
     private static ArrayList<Data> data = new ArrayList<>();
     public static Queue<String> operations_list = new LinkedList<>();
-    public static Set<Integer> days = new HashSet<Integer>();
+    public static Set<Integer> days = new HashSet<>();
+    public static MyLogger logger = new MyLogger();
+    private static SecurityFactors sf;
+    private static int debugValue = -9;
     private static int count = 0;
-    private static RiskState riskState = new RiskState();
-    public static void main(String args[]) throws FileNotFoundException {
+    private static RiskState riskState;
+
+    public static void main(String args[]) throws IOException {
         System.out.println("Working from Main!");
-        if(args.length!=1){
+        if (args.length < 1 || args.length > 3) {
             System.err.println("Usage: java <Main Class> <Argument 1>");
             System.exit(0);
         }
-        BufferedReader br = new BufferedReader(new FileReader(args[0]));
+        BufferedReader br = null;
+        FileWriter fw = null;
+        switch (args.length) {
+            case 1:
+                br = new BufferedReader(new FileReader(args[0]));
+                break;
+            case 2:
+                br = new BufferedReader(new FileReader(args[0]));
+                fw = new FileWriter(args[1]);
+                break;
+            case 3:
+                br = new BufferedReader(new FileReader(args[0]));
+                fw = new FileWriter(args[1]);
+                debugValue = Integer.parseInt(args[2]);
+                if (debugValue < 0 || debugValue > 4) {
+                    System.err.println("Invalid Debug Value. Debug value range is [0-4]");
+                    System.exit(0);
+                }
+                logger.setDebugValue(debugValue);
+                break;
+            default:
+                System.err.println("Invalid number of arguments supplied!");
+                System.exit(0);
+        }
 
         try {
-            StringBuilder sb = new StringBuilder();
             String line = br.readLine();
             if (line == null) {
                 System.err.println("Empty File Supplied!");
@@ -55,10 +84,9 @@ public class Driver {
                 System.exit(0);
             }
         }
-        SecurityFactors sf = new SecurityFactors();
+        sf = new SecurityFactors();
+        riskState = new RiskState();
         sf.calculateAverageValues(data);
         riskState.invokeSecurity(sf.getAverageTrafficPerDay(), sf.getAverageProhibitedPerDay());
-        MyLogger ml = new MyLogger();
-
     }
 }

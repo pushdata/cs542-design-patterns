@@ -1,9 +1,11 @@
 package airportSecurityState.util;
 
 import airportSecurityState.airportStates.AirportStateI;
-
+import airportSecurityState.driver.Driver;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static airportSecurityState.util.MyLogger.DebugLevel.CONSTRUCTOR;
 
 public class SecurityFactors {
     AirportStateI state;
@@ -15,19 +17,12 @@ public class SecurityFactors {
         return averageTrafficPerDay;
     }
 
-    public void setAverageTrafficPerDay(HashMap<Integer, Float> averageTrafficPerDay) {
-        this.averageTrafficPerDay = averageTrafficPerDay;
-    }
-
     public HashMap<Integer, Float> getAverageProhibitedPerDay() {
         return averageProhibitedPerDay;
     }
 
-    public void setAverageProhibitedPerDay(HashMap<Integer, Float> averageProhibitedPerDay) {
-        this.averageProhibitedPerDay = averageProhibitedPerDay;
-    }
-
     public SecurityFactors(){
+        Driver.logger.writeMessage("Security Factors Constructor Called!", CONSTRUCTOR);
     }
 
     public void calculateAverageValues(ArrayList<Data> data) {

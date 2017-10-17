@@ -2,11 +2,15 @@ package airportSecurityState.airportStates;
 
 import airportSecurityState.driver.Driver;
 
+import static airportSecurityState.util.MyLogger.DebugLevel.CONSTRUCTOR;
+import static airportSecurityState.util.MyLogger.DebugLevel.LOW_TO_HIGH;
+
 public class LowRiskState implements AirportStateI  {
     private static final String OPERATION_SEQ = "1 3 5 7 9";
     private RiskState state;
 
     public LowRiskState(RiskState iState) {
+        Driver.logger.writeMessage("Low Risk State Constructor Called!", CONSTRUCTOR);
         state = iState;
     }
     @Override
@@ -18,17 +22,21 @@ public class LowRiskState implements AirportStateI  {
                     Driver.operations_list.add(OPERATION_SEQ);
                     break;
                 case 1:
+                    Driver.logger.writeMessage("Low state to Moderate State!", LOW_TO_HIGH);
                     System.out.println("Security Tightened(MOD)");
                     state.setState(state.getModerateRiskState());
                     state.getState().tightenOrLoosenSecurity(aTraffic, aItem);
                     break;
                 case 2:
+                    Driver.logger.writeMessage("Low state to High State!", LOW_TO_HIGH);
                     System.out.println("Security Tightened(HIGH)");
                     state.setState(state.getHighRiskState());
                     state.getState().tightenOrLoosenSecurity(aTraffic, aItem);
                     break;
             }
         } else {
+            ;
+            Driver.logger.writeMessage("Low state to Moderate State!", LOW_TO_HIGH);
             System.out.println("Security Tightened(MOD)");
             state.setState(state.getModerateRiskState());
             state.getState().tightenOrLoosenSecurity(aTraffic, aItem);
