@@ -8,7 +8,6 @@ import java.util.HashMap;
 import static airportSecurityState.util.MyLogger.DebugLevel.CONSTRUCTOR;
 
 public class SecurityFactors {
-    AirportStateI state;
 
     private HashMap<Integer, Float> averageTrafficPerDay = new HashMap<>();
     private HashMap<Integer, Float> averageProhibitedPerDay = new HashMap<>();
@@ -16,7 +15,6 @@ public class SecurityFactors {
     public HashMap<Integer, Float> getAverageTrafficPerDay() {
         return averageTrafficPerDay;
     }
-
     public HashMap<Integer, Float> getAverageProhibitedPerDay() {
         return averageProhibitedPerDay;
     }
