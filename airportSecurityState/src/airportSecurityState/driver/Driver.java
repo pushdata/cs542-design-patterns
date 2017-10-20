@@ -30,6 +30,26 @@ public class Driver {
                 System.err.println("Usage: java <MainClass> <InputFile> <OutputFile> <DebugValue[0-4]>");
                 System.exit(0);
             }
+
+
+            if (null == args[0] || args[0].equals("${arg0}")) {
+                System.err.println("Please provide valid input arguments");
+                System.exit(1);
+
+            }
+
+
+            if (null == args[1] || args[1].equals("${arg1}")) {
+                System.err.println("Please provide valid input arguments");
+                System.exit(1);
+            }
+
+
+            if (null == args[2] || args[2].equals("${arg2}")) {
+                System.err.println("Please provide valid input arguments");
+                System.exit(1);
+            }
+
             fp = new FileProcessor(args[0], args[1]);
             debugValue = Integer.parseInt(args[2]);
             if (debugValue < 0 || debugValue > 4) {
