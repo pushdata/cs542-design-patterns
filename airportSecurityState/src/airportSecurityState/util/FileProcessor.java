@@ -2,7 +2,15 @@ package airportSecurityState.util;
 
 import airportSecurityState.driver.Driver;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.File;
+
+import static airportSecurityState.util.MyLogger.DebugLevel.CONSTRUCTOR;
 
 public class FileProcessor {
 
@@ -11,18 +19,14 @@ public class FileProcessor {
     private BufferedReader inputReader;
     private BufferedWriter outputWriter;
 
-    public FileProcessor(String inputFile) {
-        this.inputFile = inputFile;
-        this.outputFile = "output.txt";
+    public FileProcessor(String iInput, String iOutput) {
+        MyLogger.writeMessage("File Processor Constructor Called", CONSTRUCTOR);
+        inputFile = iInput;
+        outputFile = iOutput;
         readFile(inputFile);
     }
 
-    public FileProcessor(String inputFile, String outputFile) {
-        this.inputFile = inputFile;
-        this.outputFile = outputFile;
-        readFile(inputFile);
-    }
-
+    //Writes the operations to the output file
     public void writeFile() {
         try {
             outputWriter = new BufferedWriter(new FileWriter(new File(outputFile)));
@@ -50,6 +54,7 @@ public class FileProcessor {
         }
     }
 
+    //Reads the data from the input file
     public void readFile(String inputFile) {
         String line = null;
         String[] temp;
@@ -71,6 +76,7 @@ public class FileProcessor {
         } catch (FileNotFoundException e) {
             System.err.println("File Not Found!");
             e.printStackTrace();
+            System.exit(0);
         } catch (IOException e) {
             System.err.println("Error Reading from File");
             e.printStackTrace();

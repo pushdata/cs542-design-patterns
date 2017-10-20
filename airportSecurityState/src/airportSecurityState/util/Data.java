@@ -9,6 +9,7 @@ public class Data {
     private String item;
     private boolean isProhibited;
 
+    //Initiates the instance objects with supplied values
     public Data(int iDay, String iTime, String iAirline, String iItems, int iCount, int idayOrder) {
         day=iDay;
         time=iTime;

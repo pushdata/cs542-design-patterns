@@ -23,37 +23,37 @@ public class Driver {
     public static int count = 0;
     private static RiskState riskState;
 
-    public static void main(String args[]) throws IOException {
-        System.out.println("Working from Main!");
-        if (args.length < 1 || args.length > 3) {
-            System.err.println("Usage: java <Main Class> <Argument 1>");
-            System.exit(0);
-        }
-        switch (args.length) {
-            case 1:
-                fp = new FileProcessor(args[0]);
-                break;
-            case 2:
-                fp = new FileProcessor(args[0], args[1]);
-                break;
-            case 3:
-                fp = new FileProcessor(args[0], args[1]);
-                debugValue = Integer.parseInt(args[2]);
-                if (debugValue < 0 || debugValue > 4) {
-                    System.err.println("Invalid Debug Value. Debug value range is [0-4]");
-                    System.exit(0);
-                }
-                logger.setDebugValue(debugValue);
-                break;
-            default:
-                System.err.println("Invalid number of arguments supplied!");
+    //Invokes FileProcessor,Delegates processing to SecurityFactors,Validates the debug value
+    public static void main(String args[]) {
+        try {
+            if (args.length != 3) {
+                System.err.println("Usage: java <MainClass> <InputFile> <OutputFile> <DebugValue[0-4]>");
                 System.exit(0);
+            }
+            fp = new FileProcessor(args[0], args[1]);
+            debugValue = Integer.parseInt(args[2]);
+            if (debugValue < 0 || debugValue > 4) {
+                System.err.println("Invalid Debug Value. Debug value range is [0-4]");
+                System.exit(0);
+            }
+            logger.setDebugValue(debugValue);
+
+            //Helper Class to Calculate the average values
+            sf = new SecurityFactors();
+
+            //Context Class used by Low Risk,Moderate Risk,High Risk states
+            riskState = new RiskState();
+
+            sf.calculateAverageValues(data);
+            riskState.invokeSecurity(sf.getAverageTrafficPerDay(), sf.getAverageProhibitedPerDay());
+            fp.writeFile();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
         }
-        sf = new SecurityFactors();
-        riskState = new RiskState();
-        sf.calculateAverageValues(data);
-        riskState.invokeSecurity(sf.getAverageTrafficPerDay(), sf.getAverageProhibitedPerDay());
-        fp.writeFile();
 
     }
 }

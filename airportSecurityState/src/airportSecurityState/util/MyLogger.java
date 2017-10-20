@@ -13,8 +13,9 @@ public class MyLogger{
 
     public static void setDebugValue (int levelIn) {
         switch (levelIn) {
-            case 4: debugLevel = DebugLevel.CONSTRUCTOR; break;
-            // FIXME: add code for other cases
+            case 4:
+                debugLevel = DebugLevel.CONSTRUCTOR;
+                break;
             case 3:
                 debugLevel = DebugLevel.STATE_CHANGE;
                 break;

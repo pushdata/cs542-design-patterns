@@ -20,13 +20,11 @@ public class HighRiskState implements AirportStateI {
             switch (riskState) {
                 case 0:
                     Driver.logger.writeMessage("High state to Low State!", HIGH_TO_LOW);
-                    System.out.println("Security Loosened(LOW)");
                     state.setState(state.getLowRiskState());
                     state.getState().tightenOrLoosenSecurity(aTraffic, aItem);
                     break;
                 case 1:
                     Driver.logger.writeMessage("High state to Moderate State!", HIGH_TO_LOW);
-                    System.out.println("Security Loosened(MOD)");
                     state.setState(state.getModerateRiskState());
                     state.getState().tightenOrLoosenSecurity(aTraffic, aItem);
                     break;
@@ -36,12 +34,10 @@ public class HighRiskState implements AirportStateI {
             }
         } else if ((aTraffic >= 4.0 && aTraffic < 8.0) || (aItem >= 1.0 && aItem < 2.0)) {
             Driver.logger.writeMessage("High state to Moderate State!", HIGH_TO_LOW);
-            System.out.println("Security Loosened(MOD)");
             state.setState(state.getModerateRiskState());
             state.getState().tightenOrLoosenSecurity(aTraffic, aItem);
         } else {
             Driver.logger.writeMessage("High state to Low State!", HIGH_TO_LOW);
-            System.out.println("Security Loosened(LOW)");
             state.setState(state.getLowRiskState());
             state.getState().tightenOrLoosenSecurity(aTraffic, aItem);
         }

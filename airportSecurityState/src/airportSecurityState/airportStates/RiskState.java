@@ -13,6 +13,7 @@ public class RiskState {
     private AirportStateI moderateRiskState;
     private AirportStateI state;
 
+    //Sets initial state of Airport to Low Risk State
     public RiskState() {
         Driver.logger.writeMessage("Risk State Constructor Called!", CONSTRUCTOR);
         lowRiskState = new LowRiskState(this);

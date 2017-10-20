@@ -1,6 +1,5 @@
 package airportSecurityState.util;
 
-import airportSecurityState.airportStates.AirportStateI;
 import airportSecurityState.driver.Driver;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +10,6 @@ public class SecurityFactors {
 
     private HashMap<Integer, Float> averageTrafficPerDay = new HashMap<>();
     private HashMap<Integer, Float> averageProhibitedPerDay = new HashMap<>();
-
     public HashMap<Integer, Float> getAverageTrafficPerDay() {
         return averageTrafficPerDay;
     }
@@ -23,6 +21,7 @@ public class SecurityFactors {
         Driver.logger.writeMessage("Security Factors Constructor Called!", CONSTRUCTOR);
     }
 
+    //Computes the Average Traffic Per Day, Average Prohibited Items Per Day
     public void calculateAverageValues(ArrayList<Data> data) {
         int line = 0;
         float count = 0;
@@ -34,7 +33,5 @@ public class SecurityFactors {
             averageProhibitedPerDay.put(line, (count / d.getDayOrder()));
             line++;
         }
-
     }
-
 }
