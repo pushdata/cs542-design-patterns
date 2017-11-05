@@ -1,5 +1,8 @@
 package wordTree.driver;
 
+import wordTree.store.Results;
+import wordTree.threadMgmt.CreateWorkers;
+import wordTree.threadMgmt.Node;
 import wordTree.util.FileProcessor;
 import wordTree.util.MyLogger;
 
@@ -12,8 +15,8 @@ public class Driver {
     //Invokes FileProcessor,Delegates processing to SecurityFactors,Validates the debug value
     public static void main(String args[]) {
         try {
-            if (args.length != 4) {
-                System.err.println("Usage: java <MainClass> <InputFile> <OutputFile> <NUM_THREADS> <DebugValue[0-4]>");
+            if (args.length != 5) {
+                System.err.println("Usage: java <MainClass> <InputFile> <OutputFile> <NUM_THREADS> <Words> <DebugValue[0-4]>");
                 System.exit(0);
             }
 
@@ -36,7 +39,20 @@ public class Driver {
                 System.exit(1);
             }
 
-            fp = new FileProcessor(args[0], args[1]);
+            if (null == args[3] || args[3].equals("${arg3}")) {
+                System.err.println("Please provide valid input arguments");
+                System.exit(1);
+            }
+
+            if (null == args[4] || args[4].equals("${arg4}")) {
+                System.err.println("Please provide valid input arguments");
+                System.exit(1);
+            }
+
+            fp = new FileProcessor(args[0]);
+            Results r = new Results();
+            Node root = null;
+            CreateWorkers cw = new CreateWorkers(r, fp, root);
             NUM_THREADS = Integer.parseInt(args[2]);
             debugValue = Integer.parseInt(args[3]);
             if (debugValue < 0 || debugValue > 4) {

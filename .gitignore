@@ -34,3 +34,5 @@ atlassian-ide-plugin.xml
 
 # Cursive Clojure plugin
 .idea/replstate.xml
+/wordTree/src/input.txt
+/.gitignore
