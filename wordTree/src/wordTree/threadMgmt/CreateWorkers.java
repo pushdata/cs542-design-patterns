@@ -8,28 +8,41 @@ import java.util.ArrayList;
 public class CreateWorkers {
     Results results;
     FileProcessor fileProcessor;
-    Node root;
-    private ArrayList<Thread> threadArray;
+    private volatile Node root;
+    private Thread[] populateThreads;
 
-    public CreateWorkers(Results r, FileProcessor fp, Node root) {
+    public CreateWorkers(Results r, FileProcessor fp, int numThreads) {
         results = r;
         fileProcessor = fp;
-        this.root = root;
+        root = r.root;
+        populateThreads = new Thread[numThreads];
     }
 
-    public void startPopulateWorkers(int numThreads) {
-        for (int i = 0; i < numThreads; i++) {
-            threadArray.add(new Thread(new PopulateThread(fileProcessor, root)));
-            threadArray.get(i).start();
-            numThreads--;
+    public void startPopulateWorkers() {
+        for (int i = 0; i < populateThreads.length; i++) {
+            PopulateThread populateThread = new PopulateThread(fileProcessor, root);
+            populateThreads[i] = new Thread(populateThread);
+            populateThreads[i].start();
         }
-        for (int i = 0; i < threadArray.size(); i++) {
+        for (int i = 0; i < populateThreads.length; i++) {
             try {
-                threadArray.get(i).join();
+                populateThreads[i].join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
+        printTree(root);
+    }
+
+    private void printTree(Node node) {
+        if (node == null) {
+            return;
+        }
+        printTree(node.getLeft());
+        System.out.printf("%s ", node.getData());
+        printTree(node.getRight());
+
     }
 
 }

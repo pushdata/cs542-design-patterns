@@ -11,6 +11,8 @@ public class Driver {
     public static FileProcessor fp;
     public static int NUM_THREADS = 0;
     private static int debugValue = -9;
+    private static volatile Node root = null;
+
 
     //Invokes FileProcessor,Delegates processing to SecurityFactors,Validates the debug value
     public static void main(String args[]) {
@@ -51,10 +53,10 @@ public class Driver {
 
             fp = new FileProcessor(args[0]);
             Results r = new Results();
-            Node root = null;
-            CreateWorkers cw = new CreateWorkers(r, fp, root);
+            CreateWorkers cw = new CreateWorkers(r, fp, Integer.parseInt(args[2]));
+            cw.startPopulateWorkers();
             NUM_THREADS = Integer.parseInt(args[2]);
-            debugValue = Integer.parseInt(args[3]);
+            debugValue = Integer.parseInt(args[4]);
             if (debugValue < 0 || debugValue > 4) {
                 System.err.println("Invalid Debug Value. Debug value range is [0-4]");
                 System.exit(0);

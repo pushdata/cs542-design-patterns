@@ -4,40 +4,41 @@ import wordTree.util.FileProcessor;
 
 public class PopulateThread implements Runnable {
 
+    private static boolean flag = false;
     private FileProcessor fileProcessor;
-    private Node root;
+    private Thread t;
+    private volatile Node head;
 
-    PopulateThread(FileProcessor fp, Node iNode) {
+    PopulateThread(FileProcessor fp, Node root) {
+        this.head = root;
         fileProcessor = fp;
-        root = iNode;
     }
 
     @Override
     public void run() {
-        String data = fileProcessor.readWord();
-        while (null != data) {
-            insert(data, root);
+        System.out.println("Running Thread");
+        String data = null;
+        while ((data = fileProcessor.readWord()) != null) {
+            insert(data, head);
         }
     }
 
-    private void insert(String data, Node node) {
-        if (node == null) {
-            node.setData(data);
-        } else {
-            insertRecursive(data, node);
-        }
-    }
 
-    private void insertRecursive(String data, Node node) {
+    private synchronized void insert(String data, Node node) {
         if (node == null) {
             node = new Node();
             node.setData(data);
             node.setCount(1);
+            if (data.equals("A")) {
+                System.out.println("head added");
+            }
+            System.out.println(Thread.currentThread().getName() + " " + data);
+            return;
         } else {
             if (data.compareTo(node.getData()) < 0) {
-                insertRecursive(data, node.getLeft());
+                insert(data, node.getLeft());
             } else if (data.compareTo(node.getData()) > 0) {
-                insertRecursive(data, node.getRight());
+                insert(data, node.getRight());
             } else if (data.compareTo(node.getData()) == 0) {
                 node.setCount(node.getCount() + 1);
             }

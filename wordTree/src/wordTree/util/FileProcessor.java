@@ -80,11 +80,12 @@ public class FileProcessor {
 
     //Reads the data from the input file
     public synchronized String readWord() {
-        if (index > words.size()) {
+        if (index > words.size() - 1) {
             return null;
         } else {
             String data = words.get(index);
             index++;
+            System.out.println(index + " index");
             return data;
         }
     }
