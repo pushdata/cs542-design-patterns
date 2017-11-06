@@ -1,6 +1,14 @@
 package wordTree.threadMgmt;
 
 public class Node {
+    public void setLeft(Node left) {
+        this.left = left;
+    }
+
+    public void setRight(Node right) {
+        this.right = right;
+    }
+
     private Node left;
     private Node right;
     private String data;
@@ -17,16 +25,8 @@ public class Node {
         return left;
     }
 
-    public void setLeft(Node left) {
-        this.left = left;
-    }
-
     public Node getRight() {
         return right;
-    }
-
-    public void setRight(Node right) {
-        this.right = right;
     }
 
     public String getData() {

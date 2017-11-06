@@ -32,23 +32,24 @@ public class PopulateThread implements Runnable {
         }
     }
 
-    private synchronized void insertRec(String data, Node node) {
+    private synchronized Node insertRec(String data, Node node) {
         if (node == null) {
             node = new Node();
             node.setData(data);
             System.out.println(Thread.currentThread().getName() + " " + data);
-            return;
         } else {
+            System.out.println("Actual data" + data + "Node Data " + node.getData());
             if (data.compareTo(node.getData()) < 0) {
-                insertRec(data, node.getLeft());
+                node.setLeft(insertRec(data, node.getLeft()));
                 System.out.println("Str1 less than Str 2");
             } else if (data.compareTo(node.getData()) > 0) {
-                insertRec(data, node.getRight());
+                node.setRight(insertRec(data, node.getRight()));
                 System.out.println("Str1 greater than Str 2");
             } else if (data.compareTo(node.getData()) == 0) {
                 System.out.println("Str1 equals Str 2");
                 node.setCount(node.getCount() + 1);
             }
         }
+        return node;
     }
 }
