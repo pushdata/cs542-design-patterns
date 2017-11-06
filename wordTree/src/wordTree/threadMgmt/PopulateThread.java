@@ -17,7 +17,7 @@ public class PopulateThread implements Runnable {
     @Override
     public void run() {
         System.out.println("Running Thread");
-        String data = null;
+        String data;
         while ((data = fileProcessor.readWord()) != null) {
             insert(data, head);
         }
@@ -28,10 +28,6 @@ public class PopulateThread implements Runnable {
         if (node == null) {
             node = new Node();
             node.setData(data);
-            node.setCount(1);
-            if (data.equals("A")) {
-                System.out.println("head added");
-            }
             System.out.println(Thread.currentThread().getName() + " " + data);
             return;
         } else {

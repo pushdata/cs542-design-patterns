@@ -54,11 +54,6 @@ public class FileProcessor {
     public void writeFile() {
         try {
             outputWriter = new BufferedWriter(new FileWriter(new File(outputFile)));
-//            for (String line : Driver.operations_list) {
-//                outputWriter.write(line);
-//                outputWriter.newLine();
-//                outputWriter.flush();
-//            }
         } catch (FileNotFoundException e) {
             System.err.println("File Not Found!");
             e.printStackTrace();
@@ -78,7 +73,6 @@ public class FileProcessor {
         }
     }
 
-    //Reads the data from the input file
     public synchronized String readWord() {
         if (index > words.size() - 1) {
             return null;

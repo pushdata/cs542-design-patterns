@@ -11,12 +11,12 @@ ant -buildfile src/build.xml all
 -----------------------------------------------------------------------
 ## To run by specifying arguments from command line
 ## We will use this to run your code
-ant -buildfile src/build.xml run -Darg0=src/input.txt -Darg1=src/output.txt -Darg2=2
+ant -buildfile src/build.xml run -Darg0=src/input.txt -Darg1=src/output.txt -Darg2=3 -Darg3="A quick brown" -Darg4=3
 
 -----------------------------------------------------------------------
 
 ## To create tarball for submission
-ant -buildfile src/build.xml tarzip or tar -zcvf saiprudhvi_chode_assign_3.tar.gz saiprudhvi_chode_assign_3
+ant -buildfile src/build.xml tarzip or tar -zcvf saiprudhvi_chode_sravan_guduru_assign_4.tar.gz saiprudhvi_chode_sravan_guduru_assign_4
 
 -----------------------------------------------------------------------
 
@@ -29,18 +29,12 @@ grade of 0 for the involved assignment for my first offense and that I
 will receive a grade of F for the course for any additional
 offense.”
 
-[Date: 10/19/2017 ]
-Sai Prudhvi Chode
+[Date: xx/xx/xxxx ]
+
 -----------------------------------------------------------------------
 
 Provide justification for Data Structures used in this assignment in
 term of Big O complexity (time and/or space)
-
-Time Complexity : O(N)
-- LinkedList<String> is used to store the operation codes when each line is processed
-
-Time Complexity : O(1)
-- ArrayList<Data> is used to store the parsed information from the text file.
 
 -----------------------------------------------------------------------
 

@@ -7,6 +7,10 @@ public class Node {
     private int count;
 
     public Node() {
+        left = null;
+        right = null;
+        data = null;
+        count = 1;
     }
 
     public Node getLeft() {

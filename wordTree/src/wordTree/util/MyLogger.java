@@ -3,9 +3,9 @@ package wordTree.util;
 public class MyLogger {
 
     /*DEBUG_VALUE=4 [Print to stdout everytime a constructor is called]
-      DEBUG_VALUE=3 [Print to stdout everytime the state is changed]
-      DEBUG_VALUE=2 [Print to stdout everytime there is a transition from Low Risk State to High Risk State]
-      DEBUG_VALUE=1 [Print to stdout everytime there is a transition from High Risk State to Low Risk State]
+      DEBUG_VALUE=3 [Print to stdout everytime when the thread's run method in invoked]
+      DEBUG_VALUE=2 [Print to stdout when the words are being deleted]
+      DEBUG_VALUE=1 [Print to stdout when the words are being populated]
       DEBUG_VALUE=0 [No output should be printed from the application to stdout. It is ok to write to the output file though" ]
     */
 
@@ -17,13 +17,13 @@ public class MyLogger {
                 debugLevel = DebugLevel.CONSTRUCTOR;
                 break;
             case 3:
-                debugLevel = DebugLevel.STATE_CHANGE;
+                debugLevel = DebugLevel.RUN_STATE;
                 break;
             case 2:
-                debugLevel = DebugLevel.LOW_TO_HIGH;
+                debugLevel = DebugLevel.DELETE_THREADS;
                 break;
             case 1:
-                debugLevel = DebugLevel.HIGH_TO_LOW;
+                debugLevel = DebugLevel.POPULATE_THREADS;
                 break;
             case 0:
                 debugLevel = DebugLevel.RELEASE;
@@ -50,6 +50,6 @@ public class MyLogger {
     }
 
     public static enum DebugLevel {
-        RELEASE, STATE_CHANGE, LOW_TO_HIGH, HIGH_TO_LOW, CONSTRUCTOR
+        RELEASE, RUN_STATE, DELETE_THREADS, POPULATE_THREADS, CONSTRUCTOR
     }
 }
