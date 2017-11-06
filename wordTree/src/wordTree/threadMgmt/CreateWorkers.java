@@ -10,21 +10,19 @@ import static wordTree.util.MyLogger.DebugLevel.POPULATE_THREADS;
 public class CreateWorkers {
     Results results;
     FileProcessor fileProcessor;
-    private volatile Node root;
     private Thread[] populateThreads;
-
+    static final Object lockObj = new Object();
+    public static Node root;
     public CreateWorkers(Results iresults, FileProcessor ifileProcessor, int numThreads) {
         results = iresults;
         fileProcessor = ifileProcessor;
-        root = iresults.root;
         populateThreads = new Thread[numThreads];
     }
 
     public void startPopulateWorkers() {
         Driver.logger.writeMessage("Words being populated", POPULATE_THREADS);
-
         for (int i = 0; i < populateThreads.length; i++) {
-            PopulateThread populateThread = new PopulateThread(fileProcessor, root);
+            PopulateThread populateThread = new PopulateThread(fileProcessor);
             populateThreads[i] = new Thread(populateThread);
             populateThreads[i].start();
         }
@@ -43,19 +41,13 @@ public class CreateWorkers {
         Driver.logger.writeMessage("Words being deleted", DELETE_THREADS);
     }
 
-    public void testM() {
-        PopulateThread x = new PopulateThread(fileProcessor, root);
-        Thread t = new Thread(x);
-        t.start();
-    }
-
-    private void printTree(Node node) {
+    public void printTree(Node node) {
         if (node == null) {
             return;
         }
-        printTree(node.getLeft());
-        System.out.printf("%s ", node.getData());
-        printTree(node.getRight());
+        printTree(node.left);
+        System.out.println("Word " + node.getData() + " : " + node.getCount());
+        printTree(node.right);
 
     }
 

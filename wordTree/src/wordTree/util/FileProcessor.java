@@ -79,7 +79,6 @@ public class FileProcessor {
         } else {
             String data = words.get(index);
             index++;
-            System.out.println(index + " index");
             return data;
         }
     }

@@ -54,8 +54,7 @@ public class Driver {
             fp = new FileProcessor(args[0]);
             Results r = new Results();
             CreateWorkers cw = new CreateWorkers(r, fp, Integer.parseInt(args[2]));
-            cw.testM();
-            //       cw.startPopulateWorkers();
+            cw.startPopulateWorkers();
             NUM_THREADS = Integer.parseInt(args[2]);
             debugValue = Integer.parseInt(args[4]);
             if (debugValue < 0 || debugValue > 4) {

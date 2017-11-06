@@ -9,8 +9,8 @@ public class Node {
         this.right = right;
     }
 
-    private Node left;
-    private Node right;
+    Node left;
+    Node right;
     private String data;
     private int count;
 
@@ -19,14 +19,6 @@ public class Node {
         right = null;
         data = null;
         count = 1;
-    }
-
-    public Node getLeft() {
-        return left;
-    }
-
-    public Node getRight() {
-        return right;
     }
 
     public String getData() {
