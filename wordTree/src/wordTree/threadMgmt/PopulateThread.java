@@ -23,8 +23,16 @@ public class PopulateThread implements Runnable {
         }
     }
 
-
     private synchronized void insert(String data, Node node) {
+        if (head == null) {
+            head = new Node();
+            head.setData(data);
+        } else {
+            insertRec(data, head);
+        }
+    }
+
+    private synchronized void insertRec(String data, Node node) {
         if (node == null) {
             node = new Node();
             node.setData(data);
@@ -32,10 +40,13 @@ public class PopulateThread implements Runnable {
             return;
         } else {
             if (data.compareTo(node.getData()) < 0) {
-                insert(data, node.getLeft());
+                insertRec(data, node.getLeft());
+                System.out.println("Str1 less than Str 2");
             } else if (data.compareTo(node.getData()) > 0) {
-                insert(data, node.getRight());
+                insertRec(data, node.getRight());
+                System.out.println("Str1 greater than Str 2");
             } else if (data.compareTo(node.getData()) == 0) {
+                System.out.println("Str1 equals Str 2");
                 node.setCount(node.getCount() + 1);
             }
         }
