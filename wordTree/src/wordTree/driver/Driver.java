@@ -12,6 +12,7 @@ public class Driver {
     public static FileProcessor fp;
     public static int NUM_THREADS = 0;
     private static int debugValue = -9;
+    private static String deleteWords;
     private static volatile Node root = null;
 
 
@@ -22,7 +23,6 @@ public class Driver {
                 System.err.println("Usage: java <MainClass> <InputFile> <OutputFile> <NUM_THREADS> <Words> <DebugValue[0-4]>");
                 System.exit(0);
             }
-
 
             if (null == args[0] || args[0].equals("${arg0}")) {
                 System.err.println("Please provide valid input arguments");
@@ -52,9 +52,33 @@ public class Driver {
                 System.exit(1);
             }
 
+            NUM_THREADS = Integer.parseInt(args[2]);
+            deleteWords = args[3].trim();
+            debugValue = Integer.parseInt(args[4]);
+
+            if (debugValue < 0 || debugValue > 4) {
+                System.err.println("Debug Value should be [0-4]");
+                System.exit(1);
+            }
+
+            if (NUM_THREADS < 0 || NUM_THREADS > 4) {
+                System.err.println("Number of threads should be [1-3]");
+                System.exit(1);
+            }
+
+            int numOfWords = deleteWords.isEmpty() ? 0 : deleteWords.split("\\s+").length;
+
+            if (numOfWords != NUM_THREADS) {
+                System.err.println("Number of Threads = Number of Delete words");
+                System.exit(1);
+            }
+
             Results r = new Results();
+
             fp = new FileProcessor(args[0], args[1]);
-            CreateWorkers cw = new CreateWorkers(r, fp, Integer.parseInt(args[2]));
+
+            CreateWorkers cw = new CreateWorkers(r, fp, NUM_THREADS);
+
             cw.startPopulateWorkers();
             cw.startDeleteWorkers(args[3]);
 
@@ -62,8 +86,7 @@ public class Driver {
 
             r.writeSchedulesToFile(fp, computeResults);
 
-            NUM_THREADS = Integer.parseInt(args[2]);
-            debugValue = Integer.parseInt(args[4]);
+
             if (debugValue < 0 || debugValue > 4) {
                 System.err.println("Invalid Debug Value. Debug value range is [0-4]");
                 System.exit(0);

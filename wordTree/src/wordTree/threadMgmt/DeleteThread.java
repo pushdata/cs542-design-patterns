@@ -41,7 +41,7 @@ public class DeleteThread implements Runnable {
                     deleteRec(data, node.left);
                 } else if (data.compareTo(node.getData()) > 0) {
                     deleteRec(data, node.right);
-                } else if (data.compareTo(node.getData()) == 0) {
+                } else if (data.compareTo(node.getData()) == 0 && node.getCount() > 0) {
                     node.setCount(node.getCount() - 1);
                 }
             }

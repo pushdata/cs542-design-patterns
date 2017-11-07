@@ -41,7 +41,7 @@ public class CreateWorkers {
     }
 
     public void startDeleteWorkers(String words) {
-        String[] wordArray = words.split(" ");
+        String[] wordArray = words.split("\\s+");
         Driver.logger.writeMessage("Words being deleted", DELETE_THREADS);
         for (int i = 0; i < populateThreads.length; i++) {
             DeleteThread deleteThread = new DeleteThread(fileProcessor, wordArray[i]);
