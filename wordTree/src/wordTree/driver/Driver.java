@@ -15,8 +15,6 @@ public class Driver {
     private static String deleteWords;
     private static volatile Node root = null;
 
-
-    //Invokes FileProcessor,Delegates processing to SecurityFactors,Validates the debug value
     public static void main(String args[]) {
         try {
             if (args.length != 5) {
@@ -61,12 +59,14 @@ public class Driver {
                 System.exit(1);
             }
 
+            logger.setDebugValue(debugValue);
+
             if (NUM_THREADS < 0 || NUM_THREADS > 4) {
                 System.err.println("Number of threads should be [1-3]");
                 System.exit(1);
             }
 
-            int numOfWords = deleteWords.isEmpty() ? 0 : deleteWords.split("\\s+").length;
+            int numOfWords = (deleteWords.isEmpty() ? 0 : deleteWords.split("\\s+").length);
 
             if (numOfWords != NUM_THREADS) {
                 System.err.println("Number of Threads = Number of Delete words");
@@ -85,13 +85,6 @@ public class Driver {
             ComputeResults computeResults = new ComputeResults(r);
 
             r.writeSchedulesToFile(fp, computeResults);
-
-
-            if (debugValue < 0 || debugValue > 4) {
-                System.err.println("Invalid Debug Value. Debug value range is [0-4]");
-                System.exit(0);
-            }
-            logger.setDebugValue(debugValue);
 
         } catch (NumberFormatException e) {
             e.printStackTrace();

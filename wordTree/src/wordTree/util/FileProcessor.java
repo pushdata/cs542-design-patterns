@@ -1,17 +1,12 @@
 package wordTree.util;
 
-import wordTree.driver.Driver;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 import static wordTree.util.MyLogger.DebugLevel.CONSTRUCTOR;
@@ -56,7 +51,6 @@ public class FileProcessor {
         try {
             outputWriter = new BufferedWriter(new FileWriter(new File(outputFile)));
             outputWriter.write(s.toString());
-            outputWriter.newLine();
             outputWriter.flush();
         } catch (FileNotFoundException e) {
             System.err.println("File Not Found!");
