@@ -3,6 +3,7 @@ package wordTree.driver;
 import wordTree.store.Results;
 import wordTree.threadMgmt.CreateWorkers;
 import wordTree.threadMgmt.Node;
+import wordTree.util.ComputeResults;
 import wordTree.util.FileProcessor;
 import wordTree.util.MyLogger;
 
@@ -51,10 +52,16 @@ public class Driver {
                 System.exit(1);
             }
 
-            fp = new FileProcessor(args[0]);
             Results r = new Results();
+            fp = new FileProcessor(args[0], args[1]);
             CreateWorkers cw = new CreateWorkers(r, fp, Integer.parseInt(args[2]));
             cw.startPopulateWorkers();
+            cw.startDeleteWorkers(args[3]);
+
+            ComputeResults computeResults = new ComputeResults(r);
+
+            r.writeSchedulesToFile(fp, computeResults);
+
             NUM_THREADS = Integer.parseInt(args[2]);
             debugValue = Integer.parseInt(args[4]);
             if (debugValue < 0 || debugValue > 4) {

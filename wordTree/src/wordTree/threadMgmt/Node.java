@@ -1,16 +1,8 @@
 package wordTree.threadMgmt;
 
 public class Node {
-    public void setLeft(Node left) {
-        this.left = left;
-    }
-
-    public void setRight(Node right) {
-        this.right = right;
-    }
-
-    Node left;
-    Node right;
+    public Node left;
+    public Node right;
     private String data;
     private int count;
 

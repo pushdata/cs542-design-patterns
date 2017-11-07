@@ -11,12 +11,16 @@ public class CreateWorkers {
     Results results;
     FileProcessor fileProcessor;
     private Thread[] populateThreads;
+    private Thread[] deleteThreads;
+
     static final Object lockObj = new Object();
-    public static Node root;
+
+    // public static Node root;
     public CreateWorkers(Results iresults, FileProcessor ifileProcessor, int numThreads) {
         results = iresults;
         fileProcessor = ifileProcessor;
         populateThreads = new Thread[numThreads];
+        deleteThreads = new Thread[numThreads];
     }
 
     public void startPopulateWorkers() {
@@ -33,22 +37,28 @@ public class CreateWorkers {
                 e.printStackTrace();
             }
         }
-
-        printTree(root);
+        // printTree(root);
     }
 
-    public void startDeleteWorkers() {
+    public void startDeleteWorkers(String words) {
+        String[] wordArray = words.split(" ");
         Driver.logger.writeMessage("Words being deleted", DELETE_THREADS);
-    }
-
-    public void printTree(Node node) {
-        if (node == null) {
-            return;
+        for (int i = 0; i < populateThreads.length; i++) {
+            DeleteThread deleteThread = new DeleteThread(fileProcessor, wordArray[i]);
+            deleteThreads[i] = new Thread(deleteThread);
+            deleteThreads[i].start();
         }
-        printTree(node.left);
-        System.out.println("Word " + node.getData() + " : " + node.getCount());
-        printTree(node.right);
+        for (int i = 0; i < deleteThreads.length; i++) {
+            try {
+                deleteThreads[i].join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        //printTree(root);
+
 
     }
+
 
 }

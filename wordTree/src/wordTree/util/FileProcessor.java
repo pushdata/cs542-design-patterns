@@ -25,9 +25,10 @@ public class FileProcessor {
     private BufferedReader inputReader;
     private BufferedWriter outputWriter;
 
-    public FileProcessor(String iFile) {
+    public FileProcessor(String iFile, String oFile) {
         MyLogger.writeMessage("File Processor Constructor Called", CONSTRUCTOR);
         inputFile = iFile;
+        outputFile = oFile;
         Scanner sc1 = null;
         try {
             sc1 = new Scanner(new File(inputFile));
@@ -51,9 +52,12 @@ public class FileProcessor {
     }
 
     //Writes the operations to the output file
-    public void writeFile() {
+    public void writeFile(StringBuilder s) {
         try {
             outputWriter = new BufferedWriter(new FileWriter(new File(outputFile)));
+            outputWriter.write(s.toString());
+            outputWriter.newLine();
+            outputWriter.flush();
         } catch (FileNotFoundException e) {
             System.err.println("File Not Found!");
             e.printStackTrace();
@@ -71,6 +75,7 @@ public class FileProcessor {
                 System.exit(0);
             }
         }
+
     }
 
     public synchronized String readWord() {

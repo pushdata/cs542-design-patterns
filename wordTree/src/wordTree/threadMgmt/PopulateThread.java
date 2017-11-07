@@ -1,9 +1,11 @@
 package wordTree.threadMgmt;
 
+import wordTree.driver.Driver;
 import wordTree.util.FileProcessor;
 
+import static wordTree.store.Results.root;
 import static wordTree.threadMgmt.CreateWorkers.lockObj;
-import static wordTree.threadMgmt.CreateWorkers.root;
+import static wordTree.util.MyLogger.DebugLevel.RUN_STATE;
 
 public class PopulateThread implements Runnable {
     private FileProcessor fileProcessor;
@@ -15,7 +17,7 @@ public class PopulateThread implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Running Thread");
+        Driver.logger.writeMessage("Run method called", RUN_STATE);
         String data;
         while ((data = fileProcessor.readWord()) != null) {
             insert(data);
@@ -24,8 +26,8 @@ public class PopulateThread implements Runnable {
 
     private synchronized void insert(String data) {
         synchronized (lockObj) {
+            System.out.println("Thread id " + Thread.currentThread().getId() + "Inserting Word " + data);
             root = insertRec(data, root);
-            // System.out.println("Head node" + root.getData() + "Left " + root.left + "Right " + root.right);
         }
     }
 
@@ -34,20 +36,14 @@ public class PopulateThread implements Runnable {
             if (node == null) {
                 node = new Node();
                 node.setData(data);
-                // System.out.println(Thread.currentThread().getName() + " " + data);
                 return node;
             } else {
-                // System.out.println("Actual data" + data + "Node Data " + node.getData());
                 if (data.compareTo(node.getData()) < 0) {
                     node.left = insertRec(data, node.left);
-                    // System.out.println("Str1 less than Str 2");
                 } else if (data.compareTo(node.getData()) > 0) {
                     node.right = insertRec(data, node.right);
-                    //System.out.println("Str1 greater than Str 2");
                 } else if (data.compareTo(node.getData()) == 0) {
-                    // System.out.println("Str1 equals Str 2");
                     node.setCount(node.getCount() + 1);
-                    //System.out.println("Node value "+node.getData() + "Count "+node.getCount());
                 }
             }
             return node;

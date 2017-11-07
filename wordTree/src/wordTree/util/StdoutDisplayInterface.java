@@ -1,4 +1,5 @@
 package wordTree.util;
 
-public class StdoutDisplayInterface {
+public interface StdoutDisplayInterface {
+    public void writeToScreen();
 }
