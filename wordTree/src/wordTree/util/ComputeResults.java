@@ -3,6 +3,8 @@ package wordTree.util;
 import wordTree.store.Results;
 import wordTree.threadMgmt.Node;
 
+import static wordTree.util.MyLogger.DebugLevel.CONSTRUCTOR;
+
 public class ComputeResults {
 
     private int totalWords;
@@ -11,9 +13,20 @@ public class ComputeResults {
 
 
     public ComputeResults(Results r) {
+        MyLogger.writeMessage("ComputeResults Constructor Called", CONSTRUCTOR);
         computeResult(Results.root);
     }
 
+    /**
+     * <p>computeResult method is used to compute the following.
+     * Total Number of words
+     * Total Number of characters
+     * Total Number of distinct words
+     * </p>
+     *
+     * @param node
+     * @return void
+     */
     public void computeResult(Node node) {
         if (node == null) {
             return;
@@ -24,7 +37,6 @@ public class ComputeResults {
             totalDistinctWords += 1;
         }
         totalChars += (node.getData().length() * node.getCount());
-        System.out.println("Word " + node.getData() + " Length " + node.getData().length() * node.getCount());
         computeResult(node.right);
     }
 

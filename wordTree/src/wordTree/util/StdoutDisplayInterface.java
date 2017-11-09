@@ -1,5 +1,5 @@
 package wordTree.util;
 
 public interface StdoutDisplayInterface {
-    public void writeToScreen();
+    public void writeToScreen(ComputeResults computeResults);
 }

@@ -17,7 +17,6 @@ public class FileProcessor {
     private String outputFile;
     private static int index = 0;
     private ArrayList<String> words = new ArrayList<>();
-    private BufferedReader inputReader;
     private BufferedWriter outputWriter;
 
     public FileProcessor(String iFile, String oFile) {
@@ -46,7 +45,6 @@ public class FileProcessor {
 
     }
 
-    //Writes the operations to the output file
     public void writeFile(StringBuilder s) {
         try {
             outputWriter = new BufferedWriter(new FileWriter(new File(outputFile)));

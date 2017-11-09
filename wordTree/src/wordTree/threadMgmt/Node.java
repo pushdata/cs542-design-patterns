@@ -1,5 +1,9 @@
 package wordTree.threadMgmt;
 
+import wordTree.util.MyLogger;
+
+import static wordTree.util.MyLogger.DebugLevel.CONSTRUCTOR;
+
 public class Node {
     public Node left;
     public Node right;
@@ -7,6 +11,7 @@ public class Node {
     private int count;
 
     public Node() {
+        MyLogger.writeMessage("Node Constructor Called", CONSTRUCTOR);
         left = null;
         right = null;
         data = null;

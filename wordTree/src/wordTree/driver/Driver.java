@@ -7,6 +7,16 @@ import wordTree.util.ComputeResults;
 import wordTree.util.FileProcessor;
 import wordTree.util.MyLogger;
 
+/**
+ * <p>The Word Counter program implements an application that
+ * simply displays the number of words,characters,distinct words
+ * after processing the input file to the standard output.
+ * </p>
+ *
+ * @author Sai Prudhvi Chode, Sravan Kumar Guduru
+ * @version 1.0
+ * @since 11/08/2017
+ */
 public class Driver {
     public static MyLogger logger = new MyLogger();
     public static FileProcessor fp;
@@ -14,6 +24,16 @@ public class Driver {
     private static int debugValue = -9;
     private static String deleteWords;
     private static volatile Node root = null;
+
+    /**
+     * <p>This is the main driver code where the program
+     * execution brings, it creates the instances of Results,
+     * FileProcessor,CreateWorkers etc.
+     * </p>
+     *
+     * @param args - Input File, Output File, Num Of Threads, Words, Debug Value
+     * @return void
+     */
 
     public static void main(String args[]) {
         try {
@@ -73,18 +93,22 @@ public class Driver {
                 System.exit(1);
             }
 
-            Results r = new Results();
+            Results results = new Results();
 
             fp = new FileProcessor(args[0], args[1]);
 
-            CreateWorkers cw = new CreateWorkers(r, fp, NUM_THREADS);
+            CreateWorkers cw = new CreateWorkers(results, fp, NUM_THREADS);
 
-            cw.startPopulateWorkers();
-            cw.startDeleteWorkers(args[3]);
+            cw.startPopulateWorkers(NUM_THREADS);
+            cw.startDeleteWorkers(args[3], NUM_THREADS);
 
-            ComputeResults computeResults = new ComputeResults(r);
+            ComputeResults computeResults = new ComputeResults(results);
 
-            r.writeSchedulesToFile(fp, computeResults);
+            results.writeSchedulesToFile(fp, computeResults);
+
+            if (debugValue != 0) {
+                results.writeToScreen(computeResults);
+            }
 
         } catch (NumberFormatException e) {
             e.printStackTrace();

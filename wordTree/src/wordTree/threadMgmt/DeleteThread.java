@@ -2,8 +2,11 @@ package wordTree.threadMgmt;
 
 import wordTree.driver.Driver;
 import wordTree.util.FileProcessor;
+import wordTree.util.MyLogger;
+
 import static wordTree.store.Results.root;
 import static wordTree.threadMgmt.CreateWorkers.lockObj;
+import static wordTree.util.MyLogger.DebugLevel.CONSTRUCTOR;
 import static wordTree.util.MyLogger.DebugLevel.RUN_STATE;
 
 public class DeleteThread implements Runnable {
@@ -13,6 +16,7 @@ public class DeleteThread implements Runnable {
     private String word;
 
     DeleteThread(FileProcessor fp, String iword) {
+        MyLogger.writeMessage("DeleteThread Constructor Called", CONSTRUCTOR);
         fileProcessor = fp;
         word = iword;
     }
@@ -23,13 +27,26 @@ public class DeleteThread implements Runnable {
         delete(word);
     }
 
+    /**
+     * <p>delete method is used to delete the incoming word from the word Tree.
+     * </p>
+     *
+     * @param data
+     * @return void
+     */
     private synchronized void delete(String data) {
         synchronized (lockObj) {
-//            System.out.println("Thread id " + Thread.currentThread().getId() + "Deleting Word " + data);
             deleteRec(data, root);
         }
     }
 
+    /**
+     * <p>deleteRec method is used to recurse through the Tree to find & delete the target word.
+     * </p>
+     *
+     * @param data,node
+     * @return void
+     */
     private synchronized void deleteRec(String data, Node node) {
         synchronized (lockObj) {
             if (node == null) {
