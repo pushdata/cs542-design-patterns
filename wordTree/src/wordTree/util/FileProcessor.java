@@ -30,10 +30,6 @@ public class FileProcessor {
             System.err.println("File Not Found!");
             e.printStackTrace();
             System.exit(0);
-        } catch (IOException e) {
-            System.err.println("Error Reading from File");
-            e.printStackTrace();
-            System.exit(0);
         }
         while (sc1.hasNextLine()) {
             Scanner sc2 = new Scanner(sc1.nextLine());
