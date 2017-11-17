@@ -5,10 +5,11 @@ import fileVisitors.visitor.Node;
 import fileVisitors.driver.Driver;
 import fileVisitors.util.FileProcessor;
 
-public class PopulateVisitor {
+public class PopulateVisitor implements VisitorI {
 
 	FileProcessor fp;
-	Node root;
+	Node root = null;
+	TreeBuilder tree_builder;
 	public PopulateVisitor(FileProcessor fp)
 	{
 		this.fp = fp;
@@ -19,30 +20,20 @@ public class PopulateVisitor {
 		// Driver.logger.writeMessage("Run method called", RUN_STATE);
 	        String data;
 	        while ((data = fp.readWord()) != null) {
-	            insert(data);
+	        	if(root == null)
+	        	{
+	        	Node value = tree_builder.insertRec(data,root);
+	        	root = value;
 	        }
+	        	else
+	        	{
+	        		tree_builder.insertRec(data,root);
+	        	}
 	}
-	
-	private synchronized void insert(String data) {
-            root = insertRec(data, root);
-    }
-	
-	   private synchronized Node insertRec(String data, Node node) {
-	            if (node == null) {
-	                node = new Node();
-	                node.setData(data);
-	                return node;
-	            } else {
-	                if (data.compareTo(node.getData()) < 0) {
-	                    node.left = insertRec(data, node.left);
-	                } else if (data.compareTo(node.getData()) > 0) {
-	                    node.right = insertRec(data, node.right);
-	                } else if (data.compareTo(node.getData()) == 0) {
-	                    //node.setCount(node.getCount() + 1);
-	                	
-	                }
-	            
-	            return node;
-	        }
-	    }
 }
+
+	@Override
+	public Node vist(TreeBuilder tree_builder) {
+		return root;
+	}
+	}

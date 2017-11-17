@@ -4,6 +4,7 @@ import fileVisitors.util.MyLogger;
 import fileVisitors.util.FileProcessor;
 import fileVisitors.visitor.Node;
 import fileVisitors.visitor.PopulateVisitor;
+import fileVisitors.visitor.TreeBuilder;
 
 
 public class Driver {
@@ -56,7 +57,7 @@ public class Driver {
 
 		            fp = new FileProcessor(args[0], args[1]);
 
-		            PopulateVisitor populate = new PopulateVisitor(fp);
+		            PopulateVisitor populate_visitor = new PopulateVisitor(fp);
 
 		       //     cw.startPopulateWorkers(NUM_THREADS);
 		         //   cw.startDeleteWorkers(args[3], NUM_THREADS);

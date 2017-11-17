@@ -1,10 +1,12 @@
 package fileVisitors.visitor;
 
-public class PalindromeHighlight {
+public class PalindromeHighlight implements Visitable {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
+	@Override
+	public double accept(VisitorI visitor) {
+		
+		return 0;
 	}
 
 }
