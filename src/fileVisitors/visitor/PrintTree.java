@@ -15,6 +15,7 @@ public class PrintTree implements VisitorI{
 	{
 		PopulateVisitor populate = new PopulateVisitor();
 		Node node = populate.Return_root();
+		System.out.println(node);
 		inorder(node);
 	}
 
