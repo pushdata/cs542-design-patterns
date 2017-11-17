@@ -8,7 +8,10 @@ public class Node {
     public Node left;
     public Node right;
     private String data;
-    MyLogger MyLogger = new MyLogger();
+    private int length = 0;
+  
+
+	MyLogger MyLogger = new MyLogger();
 
     public Node() {
       //  MyLogger.writeMessage("Node Constructor Called", CONSTRUCTOR);
@@ -25,5 +28,12 @@ public class Node {
         this.data = data;
     }
 
-  
+    public int getLength() {
+  		return length;
+  	}
+
+  	public void setLength(int length) {
+  		this.length = length;
+  	}
+ 
 }
