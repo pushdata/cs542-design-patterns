@@ -28,8 +28,8 @@ public class PopulateVisitor implements VisitorI {
 	        	if(root == null)
 	        	{
 	        	 length = data.length();
-	        	Node value = tree_builder.insertRec(data,root,length);
-	        	root = value;
+	        	 root = tree_builder.insertRec(data,root,length);
+	        	
 	        }
 	        	else
 	        	{
@@ -44,7 +44,7 @@ public class PopulateVisitor implements VisitorI {
 	}
 
 	@Override
-	public Node vist(TreeBuilder tree_builder) {
+	public Node visit(TreeBuilder tree_builder) {
 		return root;
 	}
 	}

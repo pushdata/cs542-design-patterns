@@ -5,7 +5,7 @@ public class PalindromeHighlight implements VisitorI {
 
 	@Override
 	
-	public Node vist(TreeBuilder tree_builder) {
+	public Node visit(TreeBuilder tree_builder) {
 		// TODO Auto-generated method stub
 		return null;
 	}
