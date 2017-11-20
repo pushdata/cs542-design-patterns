@@ -4,25 +4,32 @@ import fileVisitors.util.FileProcessor;
 
 public class PrintTree implements VisitorI{
 
-	FileProcessor fp;
-	@Override
-	public Node visit(TreeBuilder tree_builder) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    Tree tree;
+    TreeBuilder treeBuilder;
+    StringBuilder sb;
+    FileProcessor fileProcessor;
 
-	public void print_output()
-	{
-		PopulateVisitor populate = new PopulateVisitor();
-		Node node = populate.Return_root();
-		System.out.println(node);
-		inorder(node);
-	}
+    public PrintTree(Tree tree, FileProcessor fp) {
+        this.sb = new StringBuilder();
+        this.tree = tree;
+        this.fileProcessor = fp;
+    }
+
+	@Override
+    public void visit(TreeBuilder treeBuilder) {
+        this.treeBuilder = treeBuilder;
+        inorder(this.tree.root); // Manipulating with the Root Node
+        this.treeBuilder.tree = tree; //Updating the Root Node in the Tree Builder
+        fileProcessor.writeFile(sb);
+    }
 
 	public void inorder(Node node)
 	{
-		inorder(node.left);
-		fp.writeFile(new StringBuilder(node.getData()));
-		inorder(node.right);
-	}
+        if (node == null) {
+            return;
+        }
+        inorder(node.left);
+        sb.append(node.getData());
+        inorder(node.right);
+    }
 }

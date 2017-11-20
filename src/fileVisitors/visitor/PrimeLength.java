@@ -2,43 +2,47 @@ package fileVisitors.visitor;
 
 public class PrimeLength implements VisitorI{
 
-	@Override
-	public Node visit(TreeBuilder tree_builder) {
-		// TODO Auto-generated method stub
-		return null;
+	Tree tree;
+	TreeBuilder treeBuilder;
+
+	public PrimeLength(Tree tree) {
+		this.tree = tree;
 	}
 
-	public void check_forprime()
-	{
-		PopulateVisitor populate = new PopulateVisitor();
-		Node node = populate.Return_root();
-		inorder(node);
+	public void visit(TreeBuilder treeBuilder) {
+		this.treeBuilder = treeBuilder;
+		traverseTree(tree.root);
+		this.treeBuilder.tree = tree;
 	}
-	
-	public void inorder(Node node)
-	{
-		if(node != null)
-		{
-			inorder(node.left);
-			checkprimelength(node);
-			inorder(node.right);
-			
+
+
+	public void traverseTree(Node node) {
+		if (node == null) {
+			return;
 		}
+		traverseTree(node.left);
+		updatePrimeLength(node);
+		traverseTree(node.right);
 	}
-	
-	public void checkprimelength(Node node){
+
+	public void updatePrimeLength(Node node) {
 		int length = node.getLength();
-		boolean result = true;
-		for(int i=2;i<length;i++) {
-	        if(length%i==0)
-	            result = false;
-	    }
-		if(result == true)
-		{
-			String data = node.getData();
-			node.setData(data + "-PRIME");
+		boolean isPrime = true;
+
+		for (int i = 2; i < length; i++) {
+			if (length % i == 0)
+				isPrime = false;
 		}
-		
+
+		if (isPrime && length > 1) {
+			node.setData(node.getData() + "-PRIME");
+		}
 	}
+
+	public Tree getTree() {
+		return tree;
+	}
+
+
 
 }

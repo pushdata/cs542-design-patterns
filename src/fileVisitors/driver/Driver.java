@@ -1,83 +1,78 @@
 package fileVisitors.driver;
-
-import fileVisitors.util.MyLogger;
 import fileVisitors.util.FileProcessor;
-import fileVisitors.visitor.Node;
-import fileVisitors.visitor.PopulateVisitor;
-import fileVisitors.visitor.TreeBuilder;
+import fileVisitors.util.MyLogger;
+import fileVisitors.visitor.*;
 
 
 public class Driver {
 
-	  public static FileProcessor fp;
-	  private static volatile Node root = null;
-	  public static MyLogger logger = new MyLogger();
-	  private static int debugValue = -9;
-	  private static String deleteWords;
+    public static MyLogger logger = new MyLogger();
+
+    private static int debugValue = -9;
+
 	public static void main(String[] args) {
-		        try {
-		            if (args.length != 3) {
-		                System.err.println("Usage: java <MainClass> <InputFile> <OutputFile> <NUM_THREADS> <Words> <DebugValue[0-2]>");
-		                System.exit(0);
-		            }
+        try {
+            if (args.length != 3) {
+                System.err.println("Usage: java <MainClass> <InputFile> <OutputFile> <DebugValue[0-2]>");
+                System.exit(0);
+            }
 
-		            if (null == args[0] || args[0].equals("${arg0}")) {
-		                System.err.println("Please provide valid input arguments");
-		                System.exit(1);
+            if (null == args[0] || args[0].equals("${arg0}")) {
+                System.err.println("Please provide valid input arguments");
+                System.exit(1);
 
-		            }
-
-
-		            if (null == args[1] || args[1].equals("${arg1}")) {
-		                System.err.println("Please provide valid input arguments");
-		                System.exit(1);
-		            }
+            }
 
 
-		            if (null == args[2] || args[2].equals("${arg2}")) {
-		                System.err.println("Please provide valid input arguments");
-		                System.exit(1);
-		            }
+            if (null == args[1] || args[1].equals("${arg1}")) {
+                System.err.println("Please provide valid input arguments");
+                System.exit(1);
+            }
 
-		            debugValue = Integer.parseInt(args[2]);
-		            deleteWords = args[1].trim();
 
-		            if (debugValue < 0 || debugValue > 4) {
-		                System.err.println("Debug Value should be [0-4]");
-		                System.exit(1);
-		            }
+            if (null == args[2] || args[2].equals("${arg2}")) {
+                System.err.println("Please provide valid input arguments");
+                System.exit(1);
+            }
 
-		            logger.setDebugValue(debugValue);
+            debugValue = Integer.parseInt(args[2]);
 
-		           
+            if (debugValue < 0 || debugValue > 4) {
+                System.err.println("Debug Value should be [0-4]");
+                System.exit(1);
+            }
 
-		            int numOfWords = (deleteWords.isEmpty() ? 0 : deleteWords.split("\\s+").length);
+            logger.setDebugValue(debugValue);
 
-		        //    Results results = new Results();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
 
-		            fp = new FileProcessor(args[0], args[1]);
+        }
 
-		            PopulateVisitor populate_visitor = new PopulateVisitor(fp);
+        FileProcessor fileProcessor = new FileProcessor(args[0], args[1]);
 
-		       //     cw.startPopulateWorkers(NUM_THREADS);
-		         //   cw.startDeleteWorkers(args[3], NUM_THREADS);
+        TreeBuilder treeBuilder = new TreeBuilder();
 
-		           // ComputeResults computeResults = new ComputeResults(results);
+        PopulateVisitor populateVisitor = new PopulateVisitor(fileProcessor);
 
-		            //results.writeSchedulesToFile(fp, computeResults);
+        treeBuilder.accept(populateVisitor);
 
-		           // if (debugValue != 0) {
-		             //   results.writeToScreen(computeResults);
-		            //}
+        PalindromeHighlight palindromeHighlightVisitor = new PalindromeHighlight(populateVisitor.getTree());
 
-		        } catch (NumberFormatException e) {
-		            e.printStackTrace();
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		        } finally {
+        treeBuilder.accept(palindromeHighlightVisitor);
 
-		        }
-		    }
+        PrimeLength primeLengthVisitor = new PrimeLength(palindromeHighlightVisitor.getTree());
 
-	}
+        treeBuilder.accept(primeLengthVisitor);
+
+        PrintTree printTreeVisitor = new PrintTree(primeLengthVisitor.getTree(), fileProcessor);
+
+        treeBuilder.accept(printTreeVisitor);
+    }
+
+
+}
 

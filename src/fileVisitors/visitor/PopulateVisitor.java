@@ -1,50 +1,39 @@
 package fileVisitors.visitor;
 
-import static fileVisitors.util.MyLogger.DebugLevel;
-import fileVisitors.visitor.Node;
-import fileVisitors.driver.Driver;
 import fileVisitors.util.FileProcessor;
 
 public class PopulateVisitor implements VisitorI {
 
-	FileProcessor fp;
-	Node root = null;
-	TreeBuilder tree_builder;
-	int length ;
-	public PopulateVisitor(FileProcessor fp)
-	{
-		this.fp = fp;
-	}
+    FileProcessor fileProcessor;
 
-	public PopulateVisitor()
-	{
-		
-	}
+    Tree tree;
+
+    public PopulateVisitor(FileProcessor fileProcessor) {
+        this.fileProcessor = fileProcessor;
+    }
+
+    @Override
+    public void visit(TreeBuilder treeBuilder) {
+        tree = treeBuilder.tree;
+        BuildTree();
+    }
+
 	public void BuildTree()
 	{
-		// Driver.logger.writeMessage("Run method called", RUN_STATE);
-	        String data;
-	        while ((data = fp.readWord()) != null) {
-	        	if(root == null)
-	        	{
-	        	 length = data.length();
-	        	 root = tree_builder.insertRec(data,root,length);
-	        	
-	        }
-	        	else
-	        	{
-	        		tree_builder.insertRec(data,root,length);
-	        	}
-	}
-}
-	
-	public Node Return_root()
-	{
-		return root;
-	}
+        String data;
+        while ((data = fileProcessor.readWord()) != null) {
+            int length = data.length();
+            if (tree.root == null) {
+                tree.root = tree.insertRec(data, tree.root, length);
 
-	@Override
-	public Node visit(TreeBuilder tree_builder) {
-		return root;
-	}
-	}
+            } else {
+                tree.insertRec(data, tree.root, length);
+            }
+        }
+    }
+
+    public Tree getTree() {
+        return tree;
+    }
+
+}
