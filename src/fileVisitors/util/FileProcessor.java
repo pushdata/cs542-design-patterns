@@ -1,15 +1,10 @@
 package fileVisitors.util;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.FileWriter;
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static fileVisitors.util.MyLogger.DebugLevel;
+import static fileVisitors.util.MyLogger.DebugLevel.CONSTRUCTOR;
 
 public class FileProcessor {
 
@@ -20,7 +15,7 @@ public class FileProcessor {
     private BufferedWriter outputWriter;
 
     public FileProcessor(String iFile, String oFile) {
-     //   MyLogger.writeMessage("File Processor Constructor Called", CONSTRUCTOR);
+        MyLogger.writeMessage("File Processor Constructor Called", CONSTRUCTOR);
         inputFile = iFile;
         outputFile = oFile;
         Scanner sc1 = null;

@@ -2,7 +2,7 @@ package fileVisitors.visitor;
 
 import fileVisitors.util.MyLogger;
 
-import static fileVisitors.util.MyLogger.DebugLevel;
+import static fileVisitors.util.MyLogger.DebugLevel.CONSTRUCTOR;
 
 public class Node {
     public Node left;
@@ -14,7 +14,7 @@ public class Node {
 	MyLogger MyLogger = new MyLogger();
 
     public Node() {
-      //  MyLogger.writeMessage("Node Constructor Called", CONSTRUCTOR);
+        MyLogger.writeMessage("Node Constructor Called", CONSTRUCTOR);
         left = null;
         right = null;
         data = null;

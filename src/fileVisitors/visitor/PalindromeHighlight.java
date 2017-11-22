@@ -1,6 +1,10 @@
 package fileVisitors.visitor;
 
 
+import fileVisitors.util.MyLogger;
+
+import static fileVisitors.util.MyLogger.DebugLevel.PALINDROME_CHECKER;
+
 public class PalindromeHighlight implements VisitorI {
 
 	Tree tree;
@@ -11,6 +15,8 @@ public class PalindromeHighlight implements VisitorI {
 	}
 
 	public void updatePalindromeNodes(Node node) {
+
+		MyLogger.writeMessage("Palindrome Checked Called", PALINDROME_CHECKER);
 
 		if (node == null) {
 			return;

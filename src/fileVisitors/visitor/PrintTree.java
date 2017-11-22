@@ -1,6 +1,9 @@
 package fileVisitors.visitor;
 
 import fileVisitors.util.FileProcessor;
+import fileVisitors.util.MyLogger;
+
+import static fileVisitors.util.MyLogger.DebugLevel.PRINT_TREE;
 
 public class PrintTree implements VisitorI{
 
@@ -17,6 +20,7 @@ public class PrintTree implements VisitorI{
 
 	@Override
     public void visit(TreeBuilder treeBuilder) {
+        MyLogger.writeMessage("Print Tree Visitor Invoked", PRINT_TREE);
         this.treeBuilder = treeBuilder;
         inorder(this.tree.root); // Manipulating with the Root Node
         this.treeBuilder.tree = tree; //Updating the Root Node in the Tree Builder
@@ -29,7 +33,7 @@ public class PrintTree implements VisitorI{
             return;
         }
         inorder(node.left);
-        sb.append(node.getData());
+        sb.append(node.getData() + " ");
         inorder(node.right);
     }
 }

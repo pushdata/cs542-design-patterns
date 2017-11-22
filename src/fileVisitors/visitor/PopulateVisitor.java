@@ -1,6 +1,9 @@
 package fileVisitors.visitor;
 
 import fileVisitors.util.FileProcessor;
+import fileVisitors.util.MyLogger;
+
+import static fileVisitors.util.MyLogger.DebugLevel.POPULATE_TREE;
 
 public class PopulateVisitor implements VisitorI {
 
@@ -20,6 +23,7 @@ public class PopulateVisitor implements VisitorI {
 
 	public void BuildTree()
 	{
+        MyLogger.writeMessage("POPULATE VISITOR INVOKED", POPULATE_TREE);
         String data;
         while ((data = fileProcessor.readWord()) != null) {
             int length = data.length();

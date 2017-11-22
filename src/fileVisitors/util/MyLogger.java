@@ -19,13 +19,13 @@ public class MyLogger {
                 debugLevel = DebugLevel.CONSTRUCTOR;
                 break;
             case 3:
-                debugLevel = DebugLevel.RUN_STATE;
+                debugLevel = DebugLevel.PRINT_TREE;
                 break;
             case 2:
-                debugLevel = DebugLevel.DELETE_THREADS;
+                debugLevel = DebugLevel.POPULATE_TREE;
                 break;
             case 1:
-                debugLevel = DebugLevel.POPULATE_THREADS;
+                debugLevel = DebugLevel.PALINDROME_CHECKER;
                 break;
             case 0:
                 debugLevel = DebugLevel.RELEASE;
@@ -53,6 +53,6 @@ public class MyLogger {
 
 
     public static enum DebugLevel {
-        RELEASE, RUN_STATE, DELETE_THREADS, POPULATE_THREADS, CONSTRUCTOR
+        RELEASE, PALINDROME_CHECKER, POPULATE_TREE, PRINT_TREE, CONSTRUCTOR
     }
 }
