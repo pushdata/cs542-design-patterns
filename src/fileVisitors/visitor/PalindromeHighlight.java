@@ -3,7 +3,7 @@ package fileVisitors.visitor;
 
 import fileVisitors.util.MyLogger;
 
-import static fileVisitors.util.MyLogger.DebugLevel.PALINDROME_CHECKER;
+import static fileVisitors.util.MyLogger.DebugLevel.CONSTRUCTOR;
 
 public class PalindromeHighlight implements VisitorI {
 
@@ -11,12 +11,11 @@ public class PalindromeHighlight implements VisitorI {
 	TreeBuilder treeBuilder;
 
 	public PalindromeHighlight(Tree tree) {
-		this.tree = tree;
-	}
+        MyLogger.writeMessage("Palindrome Constructor Called", CONSTRUCTOR);
+        this.tree = tree;
+    }
 
 	public void updatePalindromeNodes(Node node) {
-
-		MyLogger.writeMessage("Palindrome Checked Called", PALINDROME_CHECKER);
 
 		if (node == null) {
 			return;

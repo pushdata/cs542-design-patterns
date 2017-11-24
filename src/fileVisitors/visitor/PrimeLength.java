@@ -1,15 +1,22 @@
 package fileVisitors.visitor;
 
+import fileVisitors.util.MyLogger;
+
+import static fileVisitors.util.MyLogger.DebugLevel.CONSTRUCTOR;
+import static fileVisitors.util.MyLogger.DebugLevel.VISITOR_INVOKED;
+
 public class PrimeLength implements VisitorI{
 
 	Tree tree;
 	TreeBuilder treeBuilder;
 
 	public PrimeLength(Tree tree) {
+		MyLogger.writeMessage("PrimeLength Constructor Called", CONSTRUCTOR);
 		this.tree = tree;
 	}
 
 	public void visit(TreeBuilder treeBuilder) {
+		MyLogger.writeMessage("PrimeLength Visitor Invoked", VISITOR_INVOKED);
 		this.treeBuilder = treeBuilder;
 		traverseTree(tree.root);
 		this.treeBuilder.tree = tree;

@@ -3,7 +3,7 @@ package fileVisitors.visitor;
 import fileVisitors.util.FileProcessor;
 import fileVisitors.util.MyLogger;
 
-import static fileVisitors.util.MyLogger.DebugLevel.POPULATE_TREE;
+import static fileVisitors.util.MyLogger.DebugLevel.*;
 
 public class PopulateVisitor implements VisitorI {
 
@@ -12,18 +12,20 @@ public class PopulateVisitor implements VisitorI {
     Tree tree;
 
     public PopulateVisitor(FileProcessor fileProcessor) {
+        MyLogger.writeMessage("PopulateVisitor Constructor Called", CONSTRUCTOR);
         this.fileProcessor = fileProcessor;
     }
 
     @Override
     public void visit(TreeBuilder treeBuilder) {
+        MyLogger.writeMessage("Populate Visitor Invoked", VISITOR_INVOKED);
         tree = treeBuilder.tree;
         BuildTree();
     }
 
 	public void BuildTree()
 	{
-        MyLogger.writeMessage("POPULATE VISITOR INVOKED", POPULATE_TREE);
+        MyLogger.writeMessage("Building Tree", BUILD_TREE);
         String data;
         while ((data = fileProcessor.readWord()) != null) {
             int length = data.length();

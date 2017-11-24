@@ -3,7 +3,8 @@ package fileVisitors.visitor;
 import fileVisitors.util.FileProcessor;
 import fileVisitors.util.MyLogger;
 
-import static fileVisitors.util.MyLogger.DebugLevel.PRINT_TREE;
+import static fileVisitors.util.MyLogger.DebugLevel.CONSTRUCTOR;
+import static fileVisitors.util.MyLogger.DebugLevel.VISITOR_INVOKED;
 
 public class PrintTree implements VisitorI{
 
@@ -13,6 +14,7 @@ public class PrintTree implements VisitorI{
     FileProcessor fileProcessor;
 
     public PrintTree(Tree tree, FileProcessor fp) {
+        MyLogger.writeMessage("PrintTree Constructor Called", CONSTRUCTOR);
         this.sb = new StringBuilder();
         this.tree = tree;
         this.fileProcessor = fp;
@@ -20,20 +22,20 @@ public class PrintTree implements VisitorI{
 
 	@Override
     public void visit(TreeBuilder treeBuilder) {
-        MyLogger.writeMessage("Print Tree Visitor Invoked", PRINT_TREE);
+        MyLogger.writeMessage("Print Tree Visitor Invoked", VISITOR_INVOKED);
         this.treeBuilder = treeBuilder;
         inorder(this.tree.root); // Manipulating with the Root Node
         this.treeBuilder.tree = tree; //Updating the Root Node in the Tree Builder
         fileProcessor.writeFile(sb);
     }
 
-	public void inorder(Node node)
-	{
+    //Inorder Tree Traversal
+    public void inorder(Node node) {
         if (node == null) {
             return;
         }
         inorder(node.left);
-        sb.append(node.getData() + " ");
+        sb.append(node.getData() + "\n");
         inorder(node.right);
     }
 }

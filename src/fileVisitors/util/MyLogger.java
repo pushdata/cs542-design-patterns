@@ -19,13 +19,13 @@ public class MyLogger {
                 debugLevel = DebugLevel.CONSTRUCTOR;
                 break;
             case 3:
-                debugLevel = DebugLevel.PRINT_TREE;
+                debugLevel = DebugLevel.VISITOR_INVOKED;
                 break;
             case 2:
-                debugLevel = DebugLevel.POPULATE_TREE;
+                debugLevel = DebugLevel.BUILD_TREE;
                 break;
             case 1:
-                debugLevel = DebugLevel.PALINDROME_CHECKER;
+                debugLevel = DebugLevel.ACCEPT_VISITOR;
                 break;
             case 0:
                 debugLevel = DebugLevel.RELEASE;
@@ -53,6 +53,6 @@ public class MyLogger {
 
 
     public static enum DebugLevel {
-        RELEASE, PALINDROME_CHECKER, POPULATE_TREE, PRINT_TREE, CONSTRUCTOR
+        RELEASE, ACCEPT_VISITOR, BUILD_TREE, VISITOR_INVOKED, CONSTRUCTOR
     }
 }
