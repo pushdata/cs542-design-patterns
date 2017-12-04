@@ -4,7 +4,7 @@ import genericCheckpointing.util.MyAllTypesFirst;
 import genericCheckpointing.util.MyAllTypesSecond;
 
 public interface StoreI {
-    void writeObj(MyAllTypesFirst myFirst, String xml);
+    void writeObj(MyAllTypesFirst aRecord, int authID, String wireFormat);
 
-    void writeObj(MyAllTypesSecond mySecond, String xml);
+    void writeObj(MyAllTypesSecond bRecord, int authID, String wireFormat);
 }
