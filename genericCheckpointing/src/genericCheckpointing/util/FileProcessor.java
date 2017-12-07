@@ -11,13 +11,11 @@ public class FileProcessor {
     private static int index = 0;
     private String inputFile;
     private String outputFile;
-    private ArrayList<String> words = new ArrayList<>();
     private BufferedWriter outputWriter;
 
-    public FileProcessor(String iFile, String oFile) {
+    public FileProcessor(String iFile) {
         MyLogger.writeMessage("File Processor Constructor Called", CONSTRUCTOR);
         inputFile = iFile;
-        outputFile = oFile;
         Scanner sc1 = null;
         try {
             sc1 = new Scanner(new File(inputFile));
@@ -31,11 +29,7 @@ public class FileProcessor {
             System.exit(0);
         }
         while (sc1.hasNextLine()) {
-            Scanner sc2 = new Scanner(sc1.nextLine());
-            while (sc2.hasNext()) {
-                String s = sc2.next();
-                words.add(s);
-            }
+
         }
 
     }
@@ -63,15 +57,5 @@ public class FileProcessor {
             }
         }
 
-    }
-
-    public synchronized String readWord() {
-        if (index > words.size() - 1) {
-            return null;
-        } else {
-            String data = words.get(index);
-            index++;
-            return data;
-        }
     }
 }

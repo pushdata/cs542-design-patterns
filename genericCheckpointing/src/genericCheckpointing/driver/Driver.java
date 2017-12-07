@@ -3,12 +3,10 @@ package genericCheckpointing.driver;
 import genericCheckpointing.server.RestoreI;
 import genericCheckpointing.server.StoreI;
 import genericCheckpointing.server.StoreRestoreI;
-import genericCheckpointing.util.SerializableObject;
-import genericCheckpointing.util.MyAllTypesFirst;
-import genericCheckpointing.util.MyAllTypesSecond;
-import genericCheckpointing.util.MyLogger;
-import genericCheckpointing.util.ProxyCreator;
+import genericCheckpointing.util.*;
 import genericCheckpointing.xmlStoreRestore.StoreRestoreHandler;
+
+import java.util.ArrayList;
 
 // import the other types used in this file
 
@@ -18,6 +16,7 @@ public class Driver {
     private static int NUM_OF_OBJECTS = 0;
     private static String mode = "";
     private static String fileName = "";
+    public static ArrayList<SerializableObject> deserializedObjects;
 
     public static void main(String[] args) {
 
@@ -61,12 +60,14 @@ public class Driver {
 
         }
 
+        FileProcessor fp = new FileProcessor(fileName);
 
         ProxyCreator pc = new ProxyCreator();
 
         // create an instance of StoreRestoreHandler (which implements
         // the InvocationHandler
         StoreRestoreHandler srh = new StoreRestoreHandler();
+
 
         // create a proxy
         StoreRestoreI cpointRef = (StoreRestoreI) pc.createProxy(
@@ -76,10 +77,16 @@ public class Driver {
                 new StoreRestoreHandler()
         );
 
+
         // FIXME: invoke a method on the handler instance to set the file name for checkpointFile and open the file
+        srh.setFileName(fileName);
 
         MyAllTypesFirst myFirst;
         MyAllTypesSecond mySecond;
+
+        if (mode.equals("deser")) {
+
+        }
 
         // Use an if/switch to proceed according to the command line argument
         // For deser, just deserliaze the input file into the data structure and then print the objects
