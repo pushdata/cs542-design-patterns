@@ -1,6 +1,7 @@
 package genericCheckpointing.xmlStoreRestore;
 
 import genericCheckpointing.util.FileProcessor;
+import genericCheckpointing.util.SerializableObject;
 
 public class XMLSerialization implements StrategyI {
 
@@ -10,6 +11,7 @@ public class XMLSerialization implements StrategyI {
         fileProcessor = fp;
     }
 
-
+    public void processInput(SerializableObject obj) {
+    }
 
 }
