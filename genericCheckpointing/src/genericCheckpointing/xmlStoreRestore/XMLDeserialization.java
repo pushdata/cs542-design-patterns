@@ -1,4 +1,14 @@
 package genericCheckpointing.xmlStoreRestore;
 
-public class XMLDeserialization {
+import genericCheckpointing.util.FileProcessor;
+
+public class XMLDeserialization implements StrategyI {
+
+    private FileProcessor fileProcessor;
+
+    public XMLDeserialization(FileProcessor fp) {
+        fileProcessor = fp;
+    }
+
+
 }
