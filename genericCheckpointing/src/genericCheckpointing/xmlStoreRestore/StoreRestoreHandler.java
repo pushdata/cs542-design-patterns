@@ -18,6 +18,9 @@ public class StoreRestoreHandler implements InvocationHandler {
         xmlDeserialize = new DeserializeTypes(fileProcessor); //Fileprocessor wont be reset each time invoke is called. So it can read more complex types
     }
 
+    public void serializeData(SerializableObject sObject, StrategyI sStrategy) {
+        sStrategy.processInput(sObject);
+    }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -26,8 +29,7 @@ public class StoreRestoreHandler implements InvocationHandler {
 
         if (method.getName().equals("writeObj")) {
             if (args[1].equals("XML")) {
-                strategyI = new XMLSerialization(fileProcessor);
-                strategyI.processInput((SerializableObject) args[0]);
+                serializeData((SerializableObject) args[0], new XMLSerialization(fileProcessor));
             }
         } else if (method.getName().equals("readObj")) {
             result = xmlDeserialize.getObject();

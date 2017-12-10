@@ -4,47 +4,98 @@ public class SerializeTypes {
 
     private Object resultString = "";
 
-    public Object serializeBoolean(boolean val) {
-        resultString = "<myBool xsi:type=\"xsd:boolean\">" + val + "</myBool>";
+
+    public SerializeTypes() {
+
+    }
+
+    public Object serializeMyClass(Object className) {
+        resultString = "<complexType xsi:type=\"" + className + ">";
         return resultString;
     }
 
-    public Object serializeInt(int val) {
+    public Object serializeMyInt(Object val) {
         resultString = "<myInt xsi:type=\"xsd:int\">" + val + "</myInt>";
         return resultString;
     }
 
-    public Object serializeMyOtherInt(int val) {
+    public Object serializeMyOtherInt(Object val) {
         resultString = "<myOtherInt xsi:type=\"xsd:int\">" + val + "</myOtherInt>";
         return resultString;
     }
 
-    public Object serializeLong(long val) {
+    public Object serializeMyLong(Object val) {
         resultString = "<myLong xsi:type=\"xsd:long\">" + val + "</myLong>";
         return resultString;
     }
 
-    public Object serializeShort(short val) {
-        resultString = "<myLong xsi:type=\"xsd:long\">" + val + "</myLong>";
+    public Object serializeMyOtherLong(Object val) {
+        resultString = "<myOtherLong xsi:type=\"xsd:long\">" + val + "</myOtherLong>";
         return resultString;
     }
 
-    public Object serializeString(String val) {
+    public Object serializeMyString(Object val) {
         resultString = "<myString xsi:type=\"xsd:string\">" + val + "</myString>";
         return resultString;
     }
 
-    public Object serializeChar(char val) {
-        return "";
+    public Object serializeMyBool(Object val) {
+        resultString = "<MyBool xsi:type=\"xsd:boolean\">" + val + "</MyBool>";
+        return resultString;
     }
 
-    public Object serializeDouble(double val) {
-        return "";
+    public Object serializeMyDoubleT(Object val) {
+        resultString = "<myDoubleT xsi:type=\"xsd:double\">" + val + "</myDoubleT>";
+        return resultString;
     }
 
-    public Object serializeFloat(float val) {
-        return "";
+    public Object serializeMyOtherDoubleT(Object val) {
+        resultString = "<myOtherDoubleT xsi:type=\"xsd:double\">" + val + "</myOtherDoubleT>";
+        return resultString;
     }
 
+    public Object serializeMyFloatT(Object val) {
+        resultString = "<myFloatT xsi:type=\"xsd:float\">" + val + "</myFloatT>";
+        return resultString;
+    }
 
+    public Object serializeMyCharT(Object val) {
+        resultString = "<myCharT xsi:type=\"xsd:char\">" + val + "</myCharT>";
+        return resultString;
+    }
+
+    public Object serializeMyShortT(Object val) {
+        resultString = "<myShortT xsi:type=\"xsd:short\">" + val + "</myShortT>";
+        return resultString;
+    }
+
+    public Object serializeType(String type, Object val) {
+
+        switch (type) {
+            case "myInt":
+                return serializeMyInt(val);
+            case "myOtherInt":
+                return serializeMyOtherInt(val);
+            case "myLong":
+                return serializeMyLong(val);
+            case "myOtherLong":
+                return serializeMyOtherLong(val);
+            case "myString":
+                return serializeMyString(val);
+            case "myBool":
+                return serializeMyBool(val);
+            case "myDoubleT":
+                return serializeMyDoubleT(val);
+            case "myOtherDoubleT":
+                return serializeMyOtherDoubleT(val);
+            case "myCharT":
+                return serializeMyCharT(val);
+            case "myFloatT":
+                return serializeMyFloatT(val);
+            case "myShortT":
+                return serializeMyShortT(val);
+        }
+
+        return null;
+    }
 }

@@ -80,8 +80,8 @@ public class DeserializeTypes {
                         meth.invoke(obj, value);
                         break;
                     case "myBool":
-                        meth = aClass.getDeclaredMethod("setMyInt", int.class);
-                        meth.invoke(obj, Integer.parseInt(value));
+                        meth = aClass.getDeclaredMethod("setMyInt", boolean.class);
+                        meth.invoke(obj, Boolean.parseBoolean(value));
                         break;
                     case "myDoubleT":
                         meth = aClass.getDeclaredMethod("setMyDoubleT", double.class);

@@ -6,7 +6,7 @@ import genericCheckpointing.server.StoreRestoreI;
 import genericCheckpointing.util.*;
 import genericCheckpointing.xmlStoreRestore.StoreRestoreHandler;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 // import the other types used in this file
 
@@ -16,7 +16,7 @@ public class Driver {
     private static int NUM_OF_OBJECTS = 0;
     private static String mode = "";
     private static String fileName = "";
-    public static ArrayList<SerializableObject> objArray;
+    public static Vector<SerializableObject> objArray;
 
     public static void main(String[] args) {
 
@@ -79,13 +79,11 @@ public class Driver {
 
 
         // FIXME: invoke a method on the handler instance to set the file name for checkpointFile and open the file
-        srh.setFileName(fileName);
 
         MyAllTypesFirst myFirst;
         MyAllTypesSecond mySecond;
 
         if (mode.equals("deser")) {
-
 
         }
 
@@ -96,17 +94,21 @@ public class Driver {
 
         // create a data structure to store the objects being serialized
         // NUM_OF_OBJECTS refers to the count for each of MyAllTypesFirst and MyAllTypesSecond
-        for (int i = 0; i < NUM_OF_OBJECTS; i++) {
+        Vector<SerializableObject> before = new Vector<SerializableObject>();
 
-            // FIXME: create these object instances correctly using an explicit value constructor
-            // use the index variable of this loop to change the values of the arguments to these constructors
-            myFirst = new MyAllTypesFirst(i);
-            mySecond = new MyAllTypesSecond(i);
+        if (mode.equals("serdeser")) {
+            for (int i = 0; i < NUM_OF_OBJECTS; i++) {
 
-            // FIXME: store myFirst and mySecond in the data structure
-            ((StoreI) cpointRef).writeObj(myFirst, "XML");
-            ((StoreI) cpointRef).writeObj(mySecond, "XML");
+                // FIXME: create these object instances correctly using an explicit value constructor
+                // use the index variable of this loop to change the values of the arguments to these constructors
+                myFirst = new MyAllTypesFirst(i);
+                mySecond = new MyAllTypesSecond(i);
 
+                // FIXME: store myFirst and mySecond in the data structure
+                ((StoreI) cpointRef).writeObj(myFirst, "XML");
+                ((StoreI) cpointRef).writeObj(mySecond, "XML");
+
+            }
         }
 
         SerializableObject myRecordRet;

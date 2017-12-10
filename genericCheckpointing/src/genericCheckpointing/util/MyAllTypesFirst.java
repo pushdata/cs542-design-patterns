@@ -67,5 +67,4 @@ public class MyAllTypesFirst extends SerializableObject {
         this.myBool = myBool;
     }
 
-
 }
