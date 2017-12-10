@@ -9,7 +9,11 @@ public class MyAllTypesSecond extends SerializableObject {
     private short myShortT;
 
     public MyAllTypesSecond(int val) {
-
+        myDoubleT = (Math.random() * val) + 1;
+        myOtherDoubleT = (Math.random() * val) + 1;
+        myCharT = (char) (Math.random() * val);
+        myFloatT = (float) (Math.random() * val + 1);
+        myShortT = (short) (Math.random() * val);
     }
 
     public double getMyDoubleT() {

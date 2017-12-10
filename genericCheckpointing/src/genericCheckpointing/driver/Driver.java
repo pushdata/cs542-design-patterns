@@ -16,7 +16,7 @@ public class Driver {
     private static int NUM_OF_OBJECTS = 0;
     private static String mode = "";
     private static String fileName = "";
-    public static ArrayList<SerializableObject> deserializedObjects;
+    public static ArrayList<SerializableObject> objArray;
 
     public static void main(String[] args) {
 
@@ -66,7 +66,7 @@ public class Driver {
 
         // create an instance of StoreRestoreHandler (which implements
         // the InvocationHandler
-        StoreRestoreHandler srh = new StoreRestoreHandler();
+        StoreRestoreHandler srh = new StoreRestoreHandler(fp);
 
 
         // create a proxy
@@ -74,7 +74,7 @@ public class Driver {
                 new Class[]{
                         StoreI.class, RestoreI.class
                 },
-                new StoreRestoreHandler()
+                new StoreRestoreHandler(fp)
         );
 
 
@@ -85,6 +85,7 @@ public class Driver {
         MyAllTypesSecond mySecond;
 
         if (mode.equals("deser")) {
+
 
         }
 

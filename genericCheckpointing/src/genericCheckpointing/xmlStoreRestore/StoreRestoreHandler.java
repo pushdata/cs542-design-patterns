@@ -1,6 +1,7 @@
 package genericCheckpointing.xmlStoreRestore;
 
 import genericCheckpointing.util.FileProcessor;
+import genericCheckpointing.util.SerializableObject;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -8,8 +9,13 @@ import java.lang.reflect.Method;
 public class StoreRestoreHandler implements InvocationHandler {
 
     private String fileName;
+    private FileProcessor fileProcessor;
+    private DeserializeTypes xmlDeserialize;
+    private StrategyI strategyI;
 
-    public StoreRestoreHandler() {
+    public StoreRestoreHandler(FileProcessor fp) {
+        fileProcessor = fp;
+        xmlDeserialize = new DeserializeTypes(fileProcessor); //Fileprocessor wont be reset each time invoke is called. So it can read more complex types
     }
 
 
@@ -19,17 +25,16 @@ public class StoreRestoreHandler implements InvocationHandler {
         Object result = null;
 
         if (method.getName().equals("writeObj")) {
-
+            if (args[1].equals("XML")) {
+                strategyI = new XMLSerialization(fileProcessor);
+                strategyI.processInput((SerializableObject) args[0]);
+            }
         } else if (method.getName().equals("readObj")) {
-
+            result = xmlDeserialize.getObject();
         }
 
+        return result;
 
-        return null;
-    }
-
-    public void setFileName(String name) {
-        fileName = name;
     }
 
 

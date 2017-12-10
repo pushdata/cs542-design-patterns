@@ -2,31 +2,47 @@ package genericCheckpointing.xmlStoreRestore;
 
 public class SerializeTypes {
 
-    public String serializeBoolean(boolean val) {
+    private Object resultString = "";
+
+    public Object serializeBoolean(boolean val) {
+        resultString = "<myBool xsi:type=\"xsd:boolean\">" + val + "</myBool>";
+        return resultString;
+    }
+
+    public Object serializeInt(int val) {
+        resultString = "<myInt xsi:type=\"xsd:int\">" + val + "</myInt>";
+        return resultString;
+    }
+
+    public Object serializeMyOtherInt(int val) {
+        resultString = "<myOtherInt xsi:type=\"xsd:int\">" + val + "</myOtherInt>";
+        return resultString;
+    }
+
+    public Object serializeLong(long val) {
+        resultString = "<myLong xsi:type=\"xsd:long\">" + val + "</myLong>";
+        return resultString;
+    }
+
+    public Object serializeShort(short val) {
+        resultString = "<myLong xsi:type=\"xsd:long\">" + val + "</myLong>";
+        return resultString;
+    }
+
+    public Object serializeString(String val) {
+        resultString = "<myString xsi:type=\"xsd:string\">" + val + "</myString>";
+        return resultString;
+    }
+
+    public Object serializeChar(char val) {
         return "";
     }
 
-    public String serializeInt(int val) {
+    public Object serializeDouble(double val) {
         return "";
     }
 
-    public String serializeLong(long val) {
-        return "";
-    }
-
-    public String serializeShort(short val) {
-        return "";
-    }
-
-    public String serializeChar(char val) {
-        return "";
-    }
-
-    public String serializeDouble(double val) {
-        return "";
-    }
-
-    public String serializeFloat(float val) {
+    public Object serializeFloat(float val) {
         return "";
     }
 
