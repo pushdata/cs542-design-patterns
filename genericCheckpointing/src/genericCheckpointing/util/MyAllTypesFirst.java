@@ -67,4 +67,29 @@ public class MyAllTypesFirst extends SerializableObject {
         this.myBool = myBool;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MyAllTypesFirst that = (MyAllTypesFirst) o;
+
+        if (myInt != that.myInt) return false;
+        if (myOtherInt != that.myOtherInt) return false;
+        if (myLong != that.myLong) return false;
+        if (myOtherLong != that.myOtherLong) return false;
+        if (myBool != that.myBool) return false;
+        return myString != null ? myString.equals(that.myString) : that.myString == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = myInt;
+        result = 31 * result + myOtherInt;
+        result = 31 * result + (int) (myLong ^ (myLong >>> 32));
+        result = 31 * result + (int) (myOtherLong ^ (myOtherLong >>> 32));
+        result = 31 * result + (myString != null ? myString.hashCode() : 0);
+        result = 31 * result + (myBool ? 1 : 0);
+        return result;
+    }
 }

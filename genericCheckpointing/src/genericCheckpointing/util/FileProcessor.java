@@ -9,19 +9,19 @@ import static genericCheckpointing.util.MyLogger.DebugLevel.*;
 public class FileProcessor {
 
     private static int index = 0;
-    private String outputFile;
+    private String checkpointFile;
     private Scanner scanner;
     private BufferedWriter outputWriter;
 
     public FileProcessor(String iFile) {
         MyLogger.writeMessage("File Processor Constructor Called", CONSTRUCTOR);
-        outputFile = iFile;
+        checkpointFile = iFile;
     }
 
 
     public void initializeScanner() {
         try {
-            scanner = new Scanner(new File(outputFile));
+            scanner = new Scanner(new File(checkpointFile));
         } catch (FileNotFoundException e) {
             System.err.println("File Not Found!");
             e.printStackTrace();
@@ -40,7 +40,7 @@ public class FileProcessor {
 
     public void writeFile(StringBuilder s) {
         try {
-            outputWriter = new BufferedWriter(new FileWriter(new File(outputFile)));
+            outputWriter = new BufferedWriter(new FileWriter(new File("output.txt")));
             outputWriter.write(s.toString());
             outputWriter.flush();
         } catch (FileNotFoundException e) {
@@ -61,5 +61,10 @@ public class FileProcessor {
             }
         }
 
+    }
+
+    public void close() throws IOException {
+        scanner.close();
+        outputWriter.close();
     }
 }

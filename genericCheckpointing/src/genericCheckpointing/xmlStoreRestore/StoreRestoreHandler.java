@@ -3,12 +3,13 @@ package genericCheckpointing.xmlStoreRestore;
 import genericCheckpointing.util.FileProcessor;
 import genericCheckpointing.util.SerializableObject;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 public class StoreRestoreHandler implements InvocationHandler {
 
-    private String fileName;
+    private String checkpointFile;
     private FileProcessor fileProcessor;
     private DeserializeTypes xmlDeserialize;
     private StrategyI strategyI;
@@ -39,5 +40,15 @@ public class StoreRestoreHandler implements InvocationHandler {
 
     }
 
+    public void setCheckpointFile(String checkpointFile) {
+        this.checkpointFile = checkpointFile;
+    }
 
+    public void openFile() {
+        fileProcessor.initializeScanner();
+    }
+
+    public void closeFile() throws IOException {
+        fileProcessor.close();
+    }
 }

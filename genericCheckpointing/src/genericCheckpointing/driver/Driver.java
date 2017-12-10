@@ -6,6 +6,7 @@ import genericCheckpointing.server.StoreRestoreI;
 import genericCheckpointing.util.*;
 import genericCheckpointing.xmlStoreRestore.StoreRestoreHandler;
 
+import java.io.IOException;
 import java.util.Vector;
 
 // import the other types used in this file
@@ -13,13 +14,13 @@ import java.util.Vector;
 public class Driver {
 
     public static MyLogger logger = new MyLogger();
-    private static int NUM_OF_OBJECTS = 0;
-    private static String mode = "";
-    private static String fileName = "";
-    public static Vector<SerializableObject> objArray;
 
-    public static void main(String[] args) {
 
+    public static void main(String[] args) throws IOException {
+
+        int NUM_OF_OBJECTS = 0;
+        String mode = "";
+        String checkpointFile = "";
 
         // FIXME: read the value of checkpointFile from the command line
         try {
@@ -34,7 +35,6 @@ public class Driver {
 
             }
 
-
             if (null == args[1] || args[1].equals("${arg1}")) {
                 System.err.println("Please provide valid input arguments");
                 System.exit(1);
@@ -48,9 +48,14 @@ public class Driver {
 
             mode = args[0];
 
+            if (!mode.equals("serdeser") || !mode.equals("deser")) {
+                System.out.println("Invalid Mode! Mode must be 'serdeser' or 'deser'");
+                System.exit(1);
+            }
+
             NUM_OF_OBJECTS = Integer.parseInt(args[1]);
 
-            fileName = args[2];
+            checkpointFile = args[2];
 
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -60,7 +65,7 @@ public class Driver {
 
         }
 
-        FileProcessor fp = new FileProcessor(fileName);
+        FileProcessor fp = new FileProcessor(checkpointFile);
 
         ProxyCreator pc = new ProxyCreator();
 
@@ -79,13 +84,11 @@ public class Driver {
 
 
         // FIXME: invoke a method on the handler instance to set the file name for checkpointFile and open the file
+        srh.setCheckpointFile(checkpointFile);
 
         MyAllTypesFirst myFirst;
         MyAllTypesSecond mySecond;
 
-        if (mode.equals("deser")) {
-
-        }
 
         // Use an if/switch to proceed according to the command line argument
         // For deser, just deserliaze the input file into the data structure and then print the objects
@@ -94,7 +97,7 @@ public class Driver {
 
         // create a data structure to store the objects being serialized
         // NUM_OF_OBJECTS refers to the count for each of MyAllTypesFirst and MyAllTypesSecond
-        Vector<SerializableObject> before = new Vector<SerializableObject>();
+        Vector<SerializableObject> vector_old = new Vector<SerializableObject>();
 
         if (mode.equals("serdeser")) {
             for (int i = 0; i < NUM_OF_OBJECTS; i++) {
@@ -108,21 +111,43 @@ public class Driver {
                 ((StoreI) cpointRef).writeObj(myFirst, "XML");
                 ((StoreI) cpointRef).writeObj(mySecond, "XML");
 
+                vector_old.add(myFirst);
+                vector_old.add(mySecond);
             }
         }
 
         SerializableObject myRecordRet;
 
-        // create a data structure to store the returned ojects
+        srh.openFile();//Open the input file for deserializing
+        // create a data structure to store the returned objects
+        Vector<SerializableObject> vector_new = new Vector<>();
         for (int j = 0; j < 2 * NUM_OF_OBJECTS; j++) {
 
             myRecordRet = ((RestoreI) cpointRef).readObj("XML");
             // FIXME: store myRecordRet in the vector
+            vector_new.add(myRecordRet);
         }
 
+        if (mode.equals("deser")) {
+            for (SerializableObject serObj : vector_new) {
+                System.out.println(serObj);
+            }
+            return;
+        }
+
+        srh.closeFile();
         // FIXME: invoke a method on the handler to close the file (if it hasn't already been closed)
 
         // FIXME: compare and confirm that the serialized and deserialzed objects are equal.
+        int counter = 0;
+        if (mode.equals("serdeser")) {
+            for (int i = 0; i < 2 * NUM_OF_OBJECTS; i++) {
+                if (vector_old.get(i).equals(vector_new.get(i))) {
+                    counter++;
+                }
+            }
+        }
+        System.out.println("Total mismatched objects " + counter);
         // The comparison should use the equals and hashCode methods. Note that hashCode
         // is used for key-value based data structures
 

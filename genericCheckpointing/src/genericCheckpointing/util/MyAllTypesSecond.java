@@ -55,5 +55,33 @@ public class MyAllTypesSecond extends SerializableObject {
     public void setMyShortT(short myShortT) {
         this.myShortT = myShortT;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MyAllTypesSecond that = (MyAllTypesSecond) o;
+
+        if (Double.compare(that.myDoubleT, myDoubleT) != 0) return false;
+        if (Double.compare(that.myOtherDoubleT, myOtherDoubleT) != 0) return false;
+        if (myCharT != that.myCharT) return false;
+        if (Float.compare(that.myFloatT, myFloatT) != 0) return false;
+        return myShortT == that.myShortT;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(myDoubleT);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(myOtherDoubleT);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) myCharT;
+        result = 31 * result + (myFloatT != +0.0f ? Float.floatToIntBits(myFloatT) : 0);
+        result = 31 * result + (int) myShortT;
+        return result;
+    }
 }
 
