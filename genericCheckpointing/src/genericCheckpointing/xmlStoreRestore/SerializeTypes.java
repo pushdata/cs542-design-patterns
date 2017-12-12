@@ -40,7 +40,7 @@ public class SerializeTypes {
     }
 
     public Object serializeMyBool(Object val) {
-        resultString = "<MyBool xsi:type=\"xsd:boolean\">" + val + "</MyBool>";
+        resultString = "<myBool xsi:type=\"xsd:boolean\">" + val + "</myBool>";
         return resultString;
     }
 

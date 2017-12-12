@@ -1,5 +1,7 @@
 package genericCheckpointing.util;
 
+import java.util.Random;
+
 public class MyAllTypesFirst extends SerializableObject {
 
     private int myInt;
@@ -9,14 +11,24 @@ public class MyAllTypesFirst extends SerializableObject {
     private String myString;
     private boolean myBool;
 
+    public MyAllTypesFirst() {
+        myInt = 1105;
+        myOtherInt = 1105;
+        myLong = 11051105;
+        myOtherLong = 11051105;
+        myString = "SAI";
+        myBool = false;
+    }
 
     public MyAllTypesFirst(int val) {
-        myInt = (int) Math.random() * val + 1;
-        myLong = (long) Math.random() * val + 1;
-        myOtherLong = (long) Math.random() * val + 1;
-        myString = "" + (int) Math.random() * val + 1;
-        myOtherInt = (int) Math.random() * val + 1;
-        myBool = (Math.random() * val) % 2 == 0 ? true : false;
+        Random rand = new Random();
+        String randomString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        myInt = rand.nextInt(100);
+        myOtherInt = rand.nextInt(100);
+        myLong = rand.nextLong();
+        myOtherLong = rand.nextLong();
+        myString = "" + randomString.substring(0, rand.nextInt(randomString.length()));
+        myBool = rand.nextBoolean();
     }
 
     public int getMyInt() {
@@ -91,5 +103,17 @@ public class MyAllTypesFirst extends SerializableObject {
         result = 31 * result + (myString != null ? myString.hashCode() : 0);
         result = 31 * result + (myBool ? 1 : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "MyAllTypesFirst{" +
+                "myInt=" + myInt +
+                ", myOtherInt=" + myOtherInt +
+                ", myLong=" + myLong +
+                ", myOtherLong=" + myOtherLong +
+                ", myString='" + myString + '\'' +
+                ", myBool=" + myBool +
+                '}';
     }
 }

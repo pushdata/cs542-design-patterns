@@ -6,6 +6,7 @@ import genericCheckpointing.server.StoreRestoreI;
 import genericCheckpointing.util.*;
 import genericCheckpointing.xmlStoreRestore.StoreRestoreHandler;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -21,11 +22,12 @@ public class Driver {
         int NUM_OF_OBJECTS = 0;
         String mode = "";
         String checkpointFile = "";
+        int counter = 0;
 
         // FIXME: read the value of checkpointFile from the command line
         try {
             if (args.length != 3) {
-                System.err.println("Usage: java <MainClass> <InputFile> <OutputFile> <DebugValue[0-2]>");
+                System.err.println("Usage: java <MainClass> <Mode> <N> <File>");
                 System.exit(0);
             }
 
@@ -48,7 +50,7 @@ public class Driver {
 
             mode = args[0];
 
-            if (!mode.equals("serdeser") || !mode.equals("deser")) {
+            if (!mode.equals("serdeser") && !mode.equals("deser")) {
                 System.out.println("Invalid Mode! Mode must be 'serdeser' or 'deser'");
                 System.exit(1);
             }
@@ -83,6 +85,12 @@ public class Driver {
         );
 
 
+        //Delete file if exists
+        if (mode.equals("serdeser")) {
+            new File(checkpointFile).delete();
+        }
+
+
         // FIXME: invoke a method on the handler instance to set the file name for checkpointFile and open the file
         srh.setCheckpointFile(checkpointFile);
 
@@ -99,7 +107,10 @@ public class Driver {
         // NUM_OF_OBJECTS refers to the count for each of MyAllTypesFirst and MyAllTypesSecond
         Vector<SerializableObject> vector_old = new Vector<SerializableObject>();
 
+
         if (mode.equals("serdeser")) {
+            //Opening file for Writing!
+            srh.openFileForWriting();
             for (int i = 0; i < NUM_OF_OBJECTS; i++) {
 
                 // FIXME: create these object instances correctly using an explicit value constructor
@@ -114,42 +125,47 @@ public class Driver {
                 vector_old.add(myFirst);
                 vector_old.add(mySecond);
             }
+            srh.closeFileForWriting();
         }
 
         SerializableObject myRecordRet;
 
-        srh.openFile();//Open the input file for deserializing
+        srh.openFileForReading();
+        // Open the input file for deserializing
         // create a data structure to store the returned objects
         Vector<SerializableObject> vector_new = new Vector<>();
-        for (int j = 0; j < 2 * NUM_OF_OBJECTS; j++) {
 
+        for (int j = 0; j < 2 * NUM_OF_OBJECTS; j++) {
             myRecordRet = ((RestoreI) cpointRef).readObj("XML");
+            if (myRecordRet != null) {
+                vector_new.add(myRecordRet);
+            }
             // FIXME: store myRecordRet in the vector
-            vector_new.add(myRecordRet);
         }
+
 
         if (mode.equals("deser")) {
             for (SerializableObject serObj : vector_new) {
                 System.out.println(serObj);
             }
-            return;
         }
 
-        srh.closeFile();
         // FIXME: invoke a method on the handler to close the file (if it hasn't already been closed)
 
         // FIXME: compare and confirm that the serialized and deserialzed objects are equal.
-        int counter = 0;
         if (mode.equals("serdeser")) {
             for (int i = 0; i < 2 * NUM_OF_OBJECTS; i++) {
                 if (vector_old.get(i).equals(vector_new.get(i))) {
+
+                } else {
                     counter++;
                 }
             }
+            System.out.println("Total mismatched objects " + counter);
         }
-        System.out.println("Total mismatched objects " + counter);
         // The comparison should use the equals and hashCode methods. Note that hashCode
         // is used for key-value based data structures
+        srh.closeFileForReading();
 
     }
 }

@@ -1,5 +1,7 @@
 package genericCheckpointing.util;
 
+import java.util.Random;
+
 public class MyAllTypesSecond extends SerializableObject {
 
     private double myDoubleT;
@@ -8,12 +10,22 @@ public class MyAllTypesSecond extends SerializableObject {
     private float myFloatT;
     private short myShortT;
 
+    public MyAllTypesSecond() {
+        myDoubleT = 1105.1105;
+        myOtherDoubleT = 1105.1105;
+        myFloatT = 1105.1105f;
+        myCharT = '!';
+        myShortT = 1105;
+    }
+
     public MyAllTypesSecond(int val) {
-        myDoubleT = (Math.random() * val) + 1;
-        myOtherDoubleT = (Math.random() * val) + 1;
-        myCharT = (char) (Math.random() * val);
-        myFloatT = (float) (Math.random() * val + 1);
-        myShortT = (short) (Math.random() * val);
+        Random rand = new Random();
+        String charString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        myDoubleT = rand.nextDouble() + 10;
+        myOtherDoubleT = rand.nextDouble() + 10;
+        myCharT = charString.charAt(rand.nextInt(charString.length()));
+        myFloatT = rand.nextFloat();
+        myShortT = (short) rand.nextInt(100);
     }
 
     public double getMyDoubleT() {
@@ -65,9 +77,10 @@ public class MyAllTypesSecond extends SerializableObject {
 
         if (Double.compare(that.myDoubleT, myDoubleT) != 0) return false;
         if (Double.compare(that.myOtherDoubleT, myOtherDoubleT) != 0) return false;
-        if (myCharT != that.myCharT) return false;
-        if (Float.compare(that.myFloatT, myFloatT) != 0) return false;
-        return myShortT == that.myShortT;
+        if (that.myCharT != myCharT) return false;
+        if (that.myFloatT != myFloatT) return false;
+        if (that.myShortT != myShortT) return false;
+        return true;
     }
 
     @Override
@@ -82,6 +95,17 @@ public class MyAllTypesSecond extends SerializableObject {
         result = 31 * result + (myFloatT != +0.0f ? Float.floatToIntBits(myFloatT) : 0);
         result = 31 * result + (int) myShortT;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "MyAllTypesSecond{" +
+                "myDoubleT=" + myDoubleT +
+                ", myOtherDoubleT=" + myOtherDoubleT +
+                ", myCharT=" + myCharT +
+                ", myFloatT=" + myFloatT +
+                ", myShortT=" + myShortT +
+                '}';
     }
 }
 

@@ -12,14 +12,15 @@ public class StoreRestoreHandler implements InvocationHandler {
     private String checkpointFile;
     private FileProcessor fileProcessor;
     private DeserializeTypes xmlDeserialize;
-    private StrategyI strategyI;
+    private DeserStrategy deserStrategy;
 
     public StoreRestoreHandler(FileProcessor fp) {
         fileProcessor = fp;
-        xmlDeserialize = new DeserializeTypes(fileProcessor); //Fileprocessor wont be reset each time invoke is called. So it can read more complex types
+
+        deserStrategy = new DeserializeTypes(fileProcessor); //Fileprocessor wont be reset each time invoke is called. So it can read more complex types
     }
 
-    public void serializeData(SerializableObject sObject, StrategyI sStrategy) {
+    public void serializeData(SerializableObject sObject, SerStrategy sStrategy) {
         sStrategy.processInput(sObject);
     }
 
@@ -33,7 +34,7 @@ public class StoreRestoreHandler implements InvocationHandler {
                 serializeData((SerializableObject) args[0], new XMLSerialization(fileProcessor));
             }
         } else if (method.getName().equals("readObj")) {
-            result = xmlDeserialize.getObject();
+            result = deserStrategy.getObject();
         }
 
         return result;
@@ -44,11 +45,21 @@ public class StoreRestoreHandler implements InvocationHandler {
         this.checkpointFile = checkpointFile;
     }
 
-    public void openFile() {
-        fileProcessor.initializeScanner();
+
+    public void openFileForReading() {
+        fileProcessor.initializeReader();
     }
 
-    public void closeFile() throws IOException {
-        fileProcessor.close();
+    public void openFileForWriting() {
+        fileProcessor.initializeWriter();
     }
+
+    public void closeFileForReading() {
+        fileProcessor.closeRead();
+    }
+
+    public void closeFileForWriting() {
+        fileProcessor.closeWrite();
+    }
+
 }
