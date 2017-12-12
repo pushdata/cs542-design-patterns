@@ -1,12 +1,16 @@
 package genericCheckpointing.xmlStoreRestore;
 
+import genericCheckpointing.util.MyLogger;
+
+import static genericCheckpointing.util.MyLogger.DebugLevel.CONSTRUCTOR;
+
 public class SerializeTypes {
 
     private Object resultString = "";
 
 
     public SerializeTypes() {
-
+        MyLogger.writeMessage("SerializeTypes no-arg Constructor Called", CONSTRUCTOR);
     }
 
     public Object serializeMyClass(Object className) {

@@ -1,9 +1,12 @@
 package genericCheckpointing.xmlStoreRestore;
 
 import genericCheckpointing.util.FileProcessor;
+import genericCheckpointing.util.MyLogger;
 import genericCheckpointing.util.SerializableObject;
 
 import java.lang.reflect.Field;
+
+import static genericCheckpointing.util.MyLogger.DebugLevel.CONSTRUCTOR;
 
 public class XMLSerialization implements SerStrategy {
 
@@ -12,6 +15,7 @@ public class XMLSerialization implements SerStrategy {
     private StringBuilder stringBuilder;
 
     public XMLSerialization(FileProcessor fp) {
+        MyLogger.writeMessage("XMLSerialization 1-arg Constructor Called", CONSTRUCTOR);
         fileProcessor = fp;
         stringBuilder = new StringBuilder();
         serializeTypes = new SerializeTypes();

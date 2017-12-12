@@ -1,11 +1,14 @@
 package genericCheckpointing.xmlStoreRestore;
 
 import genericCheckpointing.util.FileProcessor;
+import genericCheckpointing.util.MyLogger;
 import genericCheckpointing.util.SerializableObject;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+
+import static genericCheckpointing.util.MyLogger.DebugLevel.CONSTRUCTOR;
 
 public class StoreRestoreHandler implements InvocationHandler {
 
@@ -15,6 +18,7 @@ public class StoreRestoreHandler implements InvocationHandler {
     private DeserStrategy deserStrategy;
 
     public StoreRestoreHandler(FileProcessor fp) {
+        MyLogger.writeMessage("StoreRestoreHandler 1-arg Constructor Called", CONSTRUCTOR);
         fileProcessor = fp;
 
         deserStrategy = new DeserializeTypes(fileProcessor); //Fileprocessor wont be reset each time invoke is called. So it can read more complex types

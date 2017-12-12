@@ -13,7 +13,6 @@ public class FileProcessor {
     private FileWriter fileWriter;
 
     public FileProcessor() {
-
     }
 
     public FileProcessor(String iFile) {

@@ -19,13 +19,13 @@ public class MyLogger {
                 debugLevel = DebugLevel.CONSTRUCTOR;
                 break;
             case 3:
-                debugLevel = DebugLevel.VISITOR_INVOKED;
+                debugLevel = DebugLevel.RESTORE;
                 break;
             case 2:
-                debugLevel = DebugLevel.BUILD_TREE;
+                debugLevel = DebugLevel.STORE;
                 break;
             case 1:
-                debugLevel = DebugLevel.ACCEPT_VISITOR;
+                debugLevel = DebugLevel.PRINT;
                 break;
             case 0:
                 debugLevel = DebugLevel.RELEASE;
@@ -53,6 +53,6 @@ public class MyLogger {
 
 
     public static enum DebugLevel {
-        RELEASE, ACCEPT_VISITOR, BUILD_TREE, VISITOR_INVOKED, CONSTRUCTOR
+        RELEASE, STORE, RESTORE, PRINT, CONSTRUCTOR
     }
 }

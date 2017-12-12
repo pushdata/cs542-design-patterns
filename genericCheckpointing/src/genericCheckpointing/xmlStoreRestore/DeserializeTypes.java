@@ -1,9 +1,12 @@
 package genericCheckpointing.xmlStoreRestore;
 
 import genericCheckpointing.util.FileProcessor;
+import genericCheckpointing.util.MyLogger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import static genericCheckpointing.util.MyLogger.DebugLevel.CONSTRUCTOR;
 
 public class DeserializeTypes implements DeserStrategy {
 
@@ -11,6 +14,7 @@ public class DeserializeTypes implements DeserStrategy {
     private String className;
 
     public DeserializeTypes(FileProcessor fp) {
+        MyLogger.writeMessage("DeserializeTypes 1-arg Constructor Called", CONSTRUCTOR);
         fileProcessor = fp;
     }
 

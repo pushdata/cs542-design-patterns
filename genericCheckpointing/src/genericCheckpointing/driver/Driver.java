@@ -6,6 +6,7 @@ import genericCheckpointing.server.StoreRestoreI;
 import genericCheckpointing.util.*;
 import genericCheckpointing.xmlStoreRestore.StoreRestoreHandler;
 
+import static genericCheckpointing.util.MyLogger.DebugLevel;
 import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
@@ -23,6 +24,8 @@ public class Driver {
         String mode = "";
         String checkpointFile = "";
         int counter = 0;
+        MyLogger.setDebugValue(1); //Defaults to PRINT
+
 
         // FIXME: read the value of checkpointFile from the command line
         try {
@@ -109,6 +112,7 @@ public class Driver {
 
 
         if (mode.equals("serdeser")) {
+            MyLogger.writeMessage("Serializing Objects to Wire Format(XML)", DebugLevel.STORE);
             //Opening file for Writing!
             srh.setCheckpointFile("output.txt");
             srh.openFileForWriting();
@@ -136,6 +140,7 @@ public class Driver {
         // create a data structure to store the returned objects
         Vector<SerializableObject> vector_new = new Vector<>();
 
+        MyLogger.writeMessage("Deserializing Wire Format(XML) to Objects", DebugLevel.RESTORE);
         for (int j = 0; j < 2 * NUM_OF_OBJECTS; j++) {
             myRecordRet = ((RestoreI) cpointRef).readObj("XML");
             if (myRecordRet != null) {
@@ -147,7 +152,7 @@ public class Driver {
 
         if (mode.equals("deser")) {
             for (SerializableObject serObj : vector_new) {
-                System.out.println(serObj);
+                MyLogger.writeMessage(serObj.toString(), DebugLevel.PRINT);
             }
         }
 
@@ -162,7 +167,7 @@ public class Driver {
                     counter++;
                 }
             }
-            System.out.println("Total mismatched objects " + counter);
+            MyLogger.writeMessage("Total mismatched objects " + counter, DebugLevel.PRINT);
         }
         // The comparison should use the equals and hashCode methods. Note that hashCode
         // is used for key-value based data structures

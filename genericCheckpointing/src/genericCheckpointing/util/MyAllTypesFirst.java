@@ -2,6 +2,8 @@ package genericCheckpointing.util;
 
 import java.util.Random;
 
+import static genericCheckpointing.util.MyLogger.DebugLevel.CONSTRUCTOR;
+
 public class MyAllTypesFirst extends SerializableObject {
 
     private int myInt;
@@ -12,6 +14,7 @@ public class MyAllTypesFirst extends SerializableObject {
     private boolean myBool;
 
     public MyAllTypesFirst() {
+        MyLogger.writeMessage("MyAllTypesFirst no-args Constructor Called", CONSTRUCTOR);
         myInt = 0;
         myOtherInt = 0;
         myLong = 0;
@@ -21,10 +24,11 @@ public class MyAllTypesFirst extends SerializableObject {
     }
 
     public MyAllTypesFirst(int val) {
+        MyLogger.writeMessage("MyAllTypesFirst 1-arg Constructor Called", CONSTRUCTOR);
         Random rand = new Random();
         String randomString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        myInt = rand.nextInt(100);
-        myOtherInt = rand.nextInt(100);
+        myInt = rand.nextInt(10) * val;
+        myOtherInt = rand.nextInt(100) * val;
         myLong = rand.nextLong();
         myOtherLong = rand.nextLong();
         myString = "" + randomString.substring(0, rand.nextInt(randomString.length()));

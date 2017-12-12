@@ -2,6 +2,8 @@ package genericCheckpointing.util;
 
 import java.util.Random;
 
+import static genericCheckpointing.util.MyLogger.DebugLevel.CONSTRUCTOR;
+
 public class MyAllTypesSecond extends SerializableObject {
 
     private double myDoubleT;
@@ -11,6 +13,7 @@ public class MyAllTypesSecond extends SerializableObject {
     private short myShortT;
 
     public MyAllTypesSecond() {
+        MyLogger.writeMessage("MyAllTypesSecond no-args Constructor Called", CONSTRUCTOR);
         myDoubleT = 0;
         myOtherDoubleT = 0;
         myFloatT = 0f;
@@ -19,13 +22,14 @@ public class MyAllTypesSecond extends SerializableObject {
     }
 
     public MyAllTypesSecond(int val) {
+        MyLogger.writeMessage("MyAllTypesSecond 1-arg Constructor Called", CONSTRUCTOR);
         Random rand = new Random();
         String charString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        myDoubleT = rand.nextDouble() + 10;
-        myOtherDoubleT = rand.nextDouble() + 10;
+        myDoubleT = rand.nextDouble() + val * 10;
+        myOtherDoubleT = rand.nextDouble() + val * 10;
         myCharT = charString.charAt(rand.nextInt(charString.length()));
         myFloatT = rand.nextFloat();
-        myShortT = (short) rand.nextInt(100);
+        myShortT = (short) rand.nextInt(val * 100);
     }
 
     public double getMyDoubleT() {
