@@ -29,7 +29,7 @@ public class MyAllTypesSecond extends SerializableObject {
         myOtherDoubleT = rand.nextDouble() + val * 10;
         myCharT = charString.charAt(rand.nextInt(charString.length()));
         myFloatT = rand.nextFloat();
-        myShortT = (short) rand.nextInt(val * 100);
+        myShortT = (short) rand.nextInt(100);
     }
 
     public double getMyDoubleT() {

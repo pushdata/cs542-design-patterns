@@ -53,7 +53,7 @@ public class Driver {
 
             mode = args[0];
 
-            if (!mode.equals("serdeser") && !mode.equals("deser")) {
+            if (!mode.equalsIgnoreCase("serdeser") && !mode.equalsIgnoreCase("deser")) {
                 System.out.println("Invalid Mode! Mode must be 'serdeser' or 'deser'");
                 System.exit(1);
             }
@@ -89,7 +89,7 @@ public class Driver {
 
 
         //Delete file if exists
-        if (mode.equals("serdeser")) {
+        if (mode.equalsIgnoreCase("serdeser")) {
             new File(checkpointFile).delete();
         }
 
@@ -111,7 +111,7 @@ public class Driver {
         Vector<SerializableObject> vector_old = new Vector<SerializableObject>();
 
 
-        if (mode.equals("serdeser")) {
+        if (mode.equalsIgnoreCase("serdeser")) {
             MyLogger.writeMessage("Serializing Objects to Wire Format(XML)", DebugLevel.STORE);
             //Opening file for Writing!
             srh.setCheckpointFile("output.txt");
@@ -150,7 +150,7 @@ public class Driver {
         }
 
 
-        if (mode.equals("deser")) {
+        if (mode.equalsIgnoreCase("deser")) {
             for (SerializableObject serObj : vector_new) {
                 MyLogger.writeMessage(serObj.toString(), DebugLevel.PRINT);
             }
