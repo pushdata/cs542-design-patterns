@@ -8,7 +8,7 @@ import static genericCheckpointing.util.MyLogger.DebugLevel.*;
 public class FileProcessor {
 
     private static int index = 0;
-    private String checkpointFile;
+    public String checkpointFile;
     private Scanner scanner;
     private FileWriter fileWriter;
 

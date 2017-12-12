@@ -10,7 +10,7 @@ public class SerializeTypes {
     }
 
     public Object serializeMyClass(Object className) {
-        resultString = "<complexType xsi:type=\"" + className + ">";
+        resultString = "<complexType xsi:type=\"" + className + "\">";
         return resultString;
     }
 

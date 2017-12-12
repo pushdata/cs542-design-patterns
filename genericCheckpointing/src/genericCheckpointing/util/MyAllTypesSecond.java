@@ -11,11 +11,11 @@ public class MyAllTypesSecond extends SerializableObject {
     private short myShortT;
 
     public MyAllTypesSecond() {
-        myDoubleT = 1105.1105;
-        myOtherDoubleT = 1105.1105;
-        myFloatT = 1105.1105f;
+        myDoubleT = 0;
+        myOtherDoubleT = 0;
+        myFloatT = 0f;
         myCharT = '!';
-        myShortT = 1105;
+        myShortT = 0;
     }
 
     public MyAllTypesSecond(int val) {

@@ -12,11 +12,11 @@ public class MyAllTypesFirst extends SerializableObject {
     private boolean myBool;
 
     public MyAllTypesFirst() {
-        myInt = 1105;
-        myOtherInt = 1105;
-        myLong = 11051105;
-        myOtherLong = 11051105;
-        myString = "SAI";
+        myInt = 0;
+        myOtherInt = 0;
+        myLong = 0;
+        myOtherLong = 0;
+        myString = "";
         myBool = false;
     }
 

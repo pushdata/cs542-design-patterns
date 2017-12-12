@@ -43,6 +43,7 @@ public class StoreRestoreHandler implements InvocationHandler {
 
     public void setCheckpointFile(String checkpointFile) {
         this.checkpointFile = checkpointFile;
+        fileProcessor.checkpointFile = checkpointFile;
     }
 
 

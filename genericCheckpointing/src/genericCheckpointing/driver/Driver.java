@@ -110,6 +110,7 @@ public class Driver {
 
         if (mode.equals("serdeser")) {
             //Opening file for Writing!
+            srh.setCheckpointFile("output.txt");
             srh.openFileForWriting();
             for (int i = 0; i < NUM_OF_OBJECTS; i++) {
 
@@ -152,7 +153,7 @@ public class Driver {
 
         // FIXME: invoke a method on the handler to close the file (if it hasn't already been closed)
 
-        // FIXME: compare and confirm that the serialized and deserialzed objects are equal.
+        // FIXME: compare and confirm that the serialized and deserialized objects are equal.
         if (mode.equals("serdeser")) {
             for (int i = 0; i < 2 * NUM_OF_OBJECTS; i++) {
                 if (vector_old.get(i).equals(vector_new.get(i))) {
